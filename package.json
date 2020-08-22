@@ -1,9 +1,9 @@
 {
   "name": "wish-list",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
+    "webpack": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -11,5 +11,10 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "express": "^4.17.1"
-  }
+  },
+  "devDependencies": {
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
+  },
+  "description": ""
 }
