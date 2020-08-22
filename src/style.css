@@ -22,3 +22,14 @@ body {
     justify-content: space-between;
     margin: 100px 0;
 }
+
+.deleteButtonImg {
+    width: 15px;
+    height: 15px;
+}
+
+.deleteButton {
+    margin-left: 80%;
+    width: 20px;
+    height: 20px;
+}
