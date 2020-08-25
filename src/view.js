@@ -1,4 +1,4 @@
-import { createDiv, createInput, createWishElement, enterPress, } from "./htmlUtils"
+import { createDiv, createInput, createWishElement, enterPressForWishes, } from "./htmlUtils"
 
 export const renderLayout = (parentElement) => {
     const userDiv = createDiv("userDiv", "userDiv")
@@ -8,11 +8,11 @@ export const renderLayout = (parentElement) => {
     const addButton = createInput("button", "addButton", "addButton")
     addButton.setAttribute("value", "add")
     const titleArea = createInput("input", "enter wish title", "titleArea", "titleArea")
-    titleArea.addEventListener("keypress", enterPress)
+    titleArea.addEventListener("keypress", enterPressForWishes)
     const bodyArea = createInput("input", "enter wish body", "bodyArea", "bodyArea")
-    bodyArea.addEventListener("keypress", enterPress)
+    bodyArea.addEventListener("keypress", enterPressForWishes)
     const urlArea = createInput("input", "enter wish url", "urlArea", "urlArea")
-    urlArea.addEventListener("keypress", enterPress)
+    urlArea.addEventListener("keypress", enterPressForWishes)
     parentElement.append(userDiv)
     userDiv.append(utilsDiv)
     userDiv.append(wishesDiv)

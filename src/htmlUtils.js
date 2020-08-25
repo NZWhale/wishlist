@@ -80,25 +80,25 @@ export const clearTextArea = () => {
     document.getElementById("urlArea").value = ""
 }
 
-export const enterPress = (e) => {
+export const enterPressForWishes = (e) => {
     if (e.keyCode == 13) {
         const titleArea = document.getElementById("titleArea").value
         const bodyArea = document.getElementById("bodyArea").value
         const urlArea = document.getElementById("urlArea").value
-        if (titleArea) {
-            if (bodyArea) {
-                if (urlArea) {
+        if (!titleArea) {
+            alert("enter title")
+        } else {
+            if(!bodyArea){
+                alert("enter body")
+            } else {
+                if(!urlArea){
+                    alert("enter url")
+                } else {
                     createNewWish(titleArea, bodyArea, urlArea, wishList)
                     renderWishes(wishList)
                     clearTextArea()
-                } else {
-                    alert("enter url")
                 }
-            } else {
-                alert("enter body")
             }
-        } else {
-            alert("enter title")
         }
     }
 }
