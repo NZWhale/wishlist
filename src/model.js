@@ -12,8 +12,10 @@ export const createNewUser = (arrayOfUsers, userName, login, password) => {
 }
 
 
-export const createNewWish = (title, body, url, wishList) => {
+export const createNewWish = (user, path, title, body, url, wishList) => {
     const wish = {
+        path: path,
+        user: user,
         title: title,
         body: body,
         url: url

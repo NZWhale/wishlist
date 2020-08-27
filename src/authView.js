@@ -1,9 +1,8 @@
-import { createDiv, createInput } from "../src/htmlUtils"
-import { createNewUser } from "./authModel"
+import { createDiv, createInput } from "./htmlUtils"
 import { enterPressForReg, enterPressForLogin } from "./authHtmlUtils"
-import { backendURL } from "./authUtils"
+import { login } from "./authModel"
 
-export const renderLoginLayout = (parentElement) => {
+export const renderLoginLayout = (parentElement, loginPageModelInstance) => {
     const authDiv = createDiv("authDiv", "authDiv")
     const loginArea = createInput("input", "enter login", "loginArea", "loginArea")
     const passwordArea = createInput("input", "enter password", "passwordArea", "passwordArea")
@@ -11,7 +10,25 @@ export const renderLoginLayout = (parentElement) => {
     const DoBArea = createInput("input", "enter your birthday", "DoBArea", "DoBArea")
     const loginButton = createInput("button", "Log In", "loginButton", "loginButton")
     loginButton.setAttribute("value", "LogIn")
-    loginButton.addEventListener("click", enterPressForLogin)
+    loginButton.addEventListener("click", function(e){
+        const loginArea = document.getElementById("loginArea").value
+        const passwordArea = document.getElementById("passwordArea").value
+        if (e.keyCode == 13) {
+            if (!loginArea) {
+                alert("enter login")
+            } else {
+                if (!passwordArea) {
+                    alert("enter password")
+                } else {
+                    login(loginArea, passwordArea, loginPageModelInstance)
+                    // loginPageModelInstance.setLoginStatus(true)
+                }
+            }
+        } else {
+            login(loginArea, passwordArea, loginPageModelInstance)
+            // loginPageModelInstance.setLoginStatus(true)
+        }
+    })
     const regButton = createInput("button", "Registration", "regButton", "regButton")
     regButton.setAttribute("value", "Registation")
     regButton.addEventListener("click", function(e) {
@@ -26,5 +43,4 @@ export const renderLoginLayout = (parentElement) => {
     })
     authDiv.append(loginArea, passwordArea, loginButton, regButton)
     parentElement.append(authDiv)
-
 }

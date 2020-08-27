@@ -1,4 +1,4 @@
-import { createNewUser, userValidationCheck } from "./authModel"
+import { createNewUser, login } from "./authModel"
 
 const clearRegTextArea = () => {
     let loginArea = document.getElementById("loginArea").value
@@ -40,12 +40,12 @@ export const enterPressForLogin = (e) => {
             if (!passwordArea) {
                 alert("enter password")
             } else {
-                userValidationCheck(loginArea, passwordArea)
+                login(loginArea, passwordArea)
                 clearLogTextArea()
             }
         }
     } else {
-        userValidationCheck(loginArea, passwordArea)
+        login(loginArea, passwordArea)
         clearLogTextArea()
     }
 }

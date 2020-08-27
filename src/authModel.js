@@ -10,10 +10,16 @@ export const createNewUser = (login, password, userName, DoB) => {
     fetchPostRequest("POST", regHandler, newUser)
 }
 
-export function userValidationCheck(login, password) {
+export function login(login, password) {
     const userData = {
         login: login,
         password: password
     }
-    fetchPostRequest("POST", logHandler, userData)
+    const loginResponsePromise = fetchPostRequest("POST", logHandler, userData)
+    loginResponsePromise.then((response) => {
+        if (response.status === 200) loginPageModelInstance.setLoginStatus(true)
+        return response.status
+    })
 }
+
+

@@ -1,12 +1,14 @@
 import { createDiv, createInput, createWishElement, enterPressForWishes, } from "./htmlUtils"
 
 export const renderLayout = (parentElement) => {
+    parentElement.innerHTML = ""
     const userDiv = createDiv("userDiv", "userDiv")
     const wishesDiv = createDiv("wishesDiv", "wishesDiv")
     const utilsDiv = createDiv("utilsDiv", "utilsDiv")
     const buttonDiv = createDiv("buttonDiv", "buttonDiv")
     const addButton = createInput("button", "addButton", "addButton")
     addButton.setAttribute("value", "add")
+    addButton.addEventListener("click", enterPressForWishes)
     const titleArea = createInput("input", "enter wish title", "titleArea", "titleArea")
     titleArea.addEventListener("keypress", enterPressForWishes)
     const bodyArea = createInput("input", "enter wish body", "bodyArea", "bodyArea")
@@ -21,6 +23,7 @@ export const renderLayout = (parentElement) => {
     utilsDiv.append(urlArea)
     utilsDiv.append(buttonDiv)
     buttonDiv.append(addButton)
+    renderWishes(wishList)
 }
 
 export const renderWishes = (wishList) => {
