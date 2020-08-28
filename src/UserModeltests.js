@@ -1,7 +1,6 @@
 import UserModel from "./UserModel.js"
 import assert from "assert"
 
-// const createNewUser = (username, DoB, wishLish) => {
 const wishLish = [
   '{{repeat(5, 7)}}',
   {
@@ -62,11 +61,6 @@ const compare = (firstArray, secondArray) => {
     }
   }
 }
-// return userModel
-// }
-
-
-// createNewUser(userName, DoB, wishLish)
 
 assert(userModel.userName === userName, "userName doesn't match")
 assert(userModel.dayOfBirthday === DoB, "DoB doesn't match")
