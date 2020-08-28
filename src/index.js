@@ -1,5 +1,5 @@
 import { renderLayout, renderWishes } from "./view"
-import { backendURL, fetchGetRequest } from "./utils"
+import { backendWishesURL, fetchGetRequest } from "./utils"
 import { renderLoginLayout } from "./authView"
 
 import LoginPageModel from "./LoginPageModel"
@@ -8,7 +8,7 @@ import LoginPageModel from "./LoginPageModel"
 window.addEventListener('load', async function () {
     const rootElement = document.getElementById("root")
     const loginPageModelInstance = new LoginPageModel();
-    const wishList = await fetchGetRequest(backendURL)
+    const wishList = await fetchGetRequest(backendWishesURL)
     renderLoginLayout(rootElement, loginPageModelInstance)
     loginPageModelInstance.addChangeEventListener(() => {
         renderLayout(rootElement, loginPageModelInstance, wishList);

@@ -16,6 +16,7 @@ export function login(login, password) {
         password: password
     }
     const loginResponsePromise = fetchPostRequest("POST", logHandler, userData)
+    // const cookieResponsePromise = fetchPostRequest("POST", cookieHandler, userData)
     loginResponsePromise.then((response) => {
         if (response.status === 200) loginPageModelInstance.setLoginStatus(true)
         return response.status

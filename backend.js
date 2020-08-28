@@ -2,33 +2,18 @@ import { existsSync, readFile, mkdirSync, writeFileSync, readFileSync, writeFile
 import express from 'express'
 import bodyParser from 'body-parser'
 import path from 'path'
+import cookieParser from "cookie-parser"
 const app = express()
 const port = 3000
 const dataPath = "./data"
 
-
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static(path.resolve() + '/'));
 app.use(bodyParser.json())
 
 
 // This are handlers for login and registation form
-app.get('/login', (req, res) => {
-    if (existsSync(dataPath)) {
-        readFile('data/users.json', (err, data) => {
-            if (err) throw err;
-            console.log(data);
-            res.send(data)
-        });
-    } else {
-        mkdirSync("data")
-        writeFileSync('data/users.json', "[]")
-        readFile('data/users.json', (err, data) => {
-            if (err) throw err;
-            console.log(data);
-            res.send(data)
-        });
-    }
-})
 
 app.post('/login', (req, res) => {
     const user = req.body;
@@ -71,6 +56,26 @@ app.post('/registration', (req, res) => {
 })
 
 // ------------------------------------------------
+
+// This are handlers for setting and getting cookies
+
+app.get('/setcookie', function(req, res){
+    const users = JSON.parse(readFileSync("data/users.json", "utf-8"))
+    const userFound = users.find(singleUser => singleUser.login === user.login && singleUser.password === user.password)
+    res.cookie('username', 'john doe', { maxAge: 900000, httpOnly: true });
+    return res.send('Cookie has been set');
+});
+
+app.get('/getcookie', function(req, res) {
+    var username = req.cookies['username'];
+    if (username) {
+        return res.send(username);        
+    }
+
+    return res.send('No cookie found');
+});
+
+//---------------------------------------------------
 
 // This are handlers for getting and sending wishes to DB
 app.get('/wishes', (req, res) => {

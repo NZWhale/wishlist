@@ -1,4 +1,4 @@
-import {fetchPostRequest, backendURL} from "./utils"
+import {fetchPostRequest, backendWishesURL} from "./utils"
 
 export const createNewUser = (arrayOfUsers, userName, login, password) => {
     const user = {
@@ -12,16 +12,14 @@ export const createNewUser = (arrayOfUsers, userName, login, password) => {
 }
 
 
-export const createNewWish = (user, path, title, body, url, wishList) => {
+export const createNewWish = (title, body, url, wishList) => {
     const wish = {
-        path: path,
-        user: user,
         title: title,
         body: body,
         url: url
     }
     if (wishList) wishList.push(wish)
-    fetchPostRequest("POST", backendURL, wishList)
+    fetchPostRequest("POST", backendWishesURL, wishList)
 }
 
 export const deleteWish = (wishList, index) => wishList.splice(index, 1)

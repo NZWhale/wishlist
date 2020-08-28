@@ -1,6 +1,7 @@
-export const backendURL = "http://127.0.0.1:3000/users"
+export const backendUsersURL = "http://127.0.0.1:3000/users"
 export const regHandler = "http://127.0.0.1:3000/registration"
 export const logHandler = "http://127.0.0.1:3000/login"
+export const cookieHandler = "http://127.0.0.1:3000/setcookie"
 // "http://zverevn420.fvds.ru:3000/"
 // "http://82.146.33.4:3000/"
 

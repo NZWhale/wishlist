@@ -1,6 +1,6 @@
 import { createNewWish, deleteWish, editWishTitle, editWishBody, editWishUrl } from "./model"
 import { renderWishes } from "./view"
-import {backendURL, fetchPostRequest} from "./utils"
+import {backendWishesURL, fetchPostRequest} from "./utils"
 
 export const createDiv = (idName, className) => {
     const div = document.createElement("div")
@@ -47,7 +47,7 @@ export const createWishElement = (wish, index) => {
         const wishIndex = wishDiv.getAttribute("index")
         deleteWish(wishList, wishIndex)
         renderWishes(wishList)
-        fetchPostRequest("POST", backendURL, wishList)
+        fetchPostRequest("POST", backendWishesURL, wishList)
     })
     deleteButtonImg.setAttribute("src", "./src/deleteButton.jpg")
     deleteButtonImg.setAttribute("class", "deleteButtonImg")
@@ -60,7 +60,7 @@ export const createWishElement = (wish, index) => {
         editWishBody(wishList, wishIndex, editedBody)
         editWishUrl(wishList, wishIndex, editedUrl)
         renderWishes(wishList)
-        fetchPostRequest("POST", backendURL, wishList)
+        fetchPostRequest("POST", backendWishesURL, wishList)
     })
     editButtonImg.setAttribute("src", "./src/editButton.jpg")
     editButtonImg.setAttribute("class", "editButton")
