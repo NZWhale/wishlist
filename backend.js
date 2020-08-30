@@ -21,8 +21,12 @@ app.post('/login', (req, res) => {
         const users = JSON.parse(readFileSync("data/users.json", "utf-8"))
         const userFound = users.find(singleUser => singleUser.login === user.login && singleUser.password === user.password)
         if (userFound) {
+            const userData = {
+                "userName": userFound.userName,
+                "DoB": userFound.DoB
+                }
             console.log("login successful")
-            res.status(200).send("login successful")
+            res.status(200).send(userData)
         } else {
             console.log("user not found")
             res.status(404).send("user not found")

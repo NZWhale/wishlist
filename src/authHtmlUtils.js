@@ -1,6 +1,6 @@
 import { createNewUser, login } from "./authModel"
 
-const clearRegTextArea = () => {
+export const clearRegTextArea = () => {
     let loginArea = document.getElementById("loginArea").value
     let passwordArea = document.getElementById("passwordArea").value
     let userNameArea = document.getElementById("userNameArea").value

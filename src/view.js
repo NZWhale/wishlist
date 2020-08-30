@@ -1,8 +1,10 @@
 import { createDiv, createInput, createWishElement, enterPressForWishes, } from "./htmlUtils"
 
-export const renderLayout = (parentElement) => {
+export const renderLayout = (parentElement, userName, wishList) => {
     parentElement.innerHTML = ""
     const userDiv = createDiv("userDiv", "userDiv")
+    const userNameDiv = createDiv("userNameDiv", "userNameDiv")
+    userNameDiv.innerHTML = userName
     const wishesDiv = createDiv("wishesDiv", "wishesDiv")
     const utilsDiv = createDiv("utilsDiv", "utilsDiv")
     const buttonDiv = createDiv("buttonDiv", "buttonDiv")
@@ -18,6 +20,7 @@ export const renderLayout = (parentElement) => {
     parentElement.append(userDiv)
     userDiv.append(utilsDiv)
     userDiv.append(wishesDiv)
+    userDiv.append(userNameDiv)
     utilsDiv.append(titleArea)
     utilsDiv.append(bodyArea)
     utilsDiv.append(urlArea)

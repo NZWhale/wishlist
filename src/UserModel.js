@@ -1,30 +1,30 @@
 export default class UserModel {
     constructor(userName, dayOfBirthday, wishList) {
-        this.userName = userName
-        this.dayOfBirthday = dayOfBirthday
-        this.wishList = wishList
+        this._userName = userName
+        this._dayOfBirthday = dayOfBirthday
+        this._wishList = wishList
     }
 
     setUserName(userName){
-        this.userName = userName
+        this._userName = userName
     }
 
     getUserName(){
-        return this.userName
+        return this._userName
     }
 
     setToWishList(wishList){
-        this.wishList = wishList
+        this._wishList = wishList
     }
 
     getFromWishList(){
-        return this.wishList
+        return this._wishList
     }
 
     setDayOfBirthday(DoB){
-        this.dayOfBirthday = DoB
+        this._dayOfBirthday = DoB
     }
     getDayOfBirthday(){
-        return this.dayOfBirthday
+        return this._dayOfBirthday
     }
 }

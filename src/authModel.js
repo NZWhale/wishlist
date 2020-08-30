@@ -10,7 +10,7 @@ export const createNewUser = (login, password, userName, DoB) => {
     fetchPostRequest("POST", regHandler, newUser)
 }
 
-export function login(login, password) {
+export function login(login, password, loginPageModelInstance, userModelInstance) {
     const userData = {
         login: login,
         password: password
@@ -18,8 +18,12 @@ export function login(login, password) {
     const loginResponsePromise = fetchPostRequest("POST", logHandler, userData)
     // const cookieResponsePromise = fetchPostRequest("POST", cookieHandler, userData)
     loginResponsePromise.then((response) => {
-        if (response.status === 200) loginPageModelInstance.setLoginStatus(true)
-        return response.status
+        if (!response.status) {
+            userModelInstance.setUserName(response.userName)
+            userModelInstance.setDayOfBirthday(response.DoB)
+            loginPageModelInstance.setLoginStatus(true)
+            return response
+        }
     })
 }
 
