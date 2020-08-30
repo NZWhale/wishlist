@@ -19,6 +19,7 @@ body {
 .userDiv {
     display: flex;
     flex-wrap: wrap;
+    flex-direction: column;
     justify-content: space-between;
     margin: 100px 0;
 }

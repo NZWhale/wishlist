@@ -1,26 +1,18 @@
-export default class LoginPageModel {
+import EventEmitter from "./EventEmitter"
+
+export default class LoginPageModel extends EventEmitter {
     constructor() {
-        this._userIsLoggedIn = false;
-        this.handlers = []
+        super()
+        this._userIsLoggedIn = false
     }
     
     setLoginStatus(userIsLoggedIn) {
         this._userIsLoggedIn = userIsLoggedIn
-        this.executeHandlers();
+        this.executeHandlers()
     }
 
     getLoginStatus() {
         return this._userIsLoggedIn
-    }
-
-    addChangeEventListener(handler) {
-        this.handlers.push(handler)
-    }
-
-    executeHandlers() {
-        this.handlers.forEach((handler) => {
-            handler();
-        })
     }
 }
 

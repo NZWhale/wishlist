@@ -1,5 +1,5 @@
 import { createDiv, createInput } from "./htmlUtils"
-import { enterPressForReg, enterPressForLogin, clearRegTextArea } from "./authHtmlUtils"
+import { clearRegTextArea } from "./authHtmlUtils"
 import { login, createNewUser } from "./authModel"
 
 export const renderLoginLayout = (parentElement, loginPageModelInstance, userModelInstance) => {
@@ -69,6 +69,6 @@ export const renderLoginLayout = (parentElement, loginPageModelInstance, userMod
         authDiv.append(loginArea, passwordArea, userNameArea, DoBArea, compliteRegButton, backButton)
         parentElement.append(authDiv)
     })
-        authDiv.append(loginArea, passwordArea, loginButton, regButton)
-        parentElement.append(authDiv)
+    authDiv.append(loginArea, passwordArea, loginButton, regButton)
+    parentElement.append(authDiv)
 }

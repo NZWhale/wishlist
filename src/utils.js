@@ -15,7 +15,9 @@ export function fetchPostRequest(method, url, body = null) {
     }).then(response => {
         return response.json()
     }, err => {
+        // console.error
         console.log(err, "data wasn't wrote")
+        throw err
     })
 }
 

@@ -1,10 +1,4 @@
 export default class UserModel {
-    constructor(userName, dayOfBirthday, wishList) {
-        this._userName = userName
-        this._dayOfBirthday = dayOfBirthday
-        this._wishList = wishList
-    }
-
     setUserName(userName){
         this._userName = userName
     }
@@ -22,8 +16,10 @@ export default class UserModel {
     }
 
     setDayOfBirthday(DoB){
+        // use lowerCamelCase. UpperCamelCase is for classes only
         this._dayOfBirthday = DoB
     }
+
     getDayOfBirthday(){
         return this._dayOfBirthday
     }

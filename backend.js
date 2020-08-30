@@ -29,6 +29,7 @@ app.post('/login', (req, res) => {
             res.status(200).send(userData)
         } else {
             console.log("user not found")
+            // should be 401
             res.status(404).send("user not found")
         }
     }
