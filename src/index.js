@@ -18,7 +18,7 @@ window.addEventListener('load', async function () {
         renderWishes(wishList, userName)
     })
     
-    // window.wishList = wishList
+    window.wishList = wishList
     // window.loginPageModelInstance = loginPageModelInstance
     window.userModelInstance = userModelInstance
 })

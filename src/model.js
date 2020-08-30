@@ -12,12 +12,12 @@ export const createNewUser = (arrayOfUsers, userName, login, password) => {
 }
 
 
-export const createNewWish = (title, body, url, user, wishList) => {
+export const createNewWish = (title, body, url, userName, wishList) => {
     const wish = {
         title: title,
         body: body,
         url: url,
-        user: user,
+        userName: userName,
     }
     if (wishList) wishList.push(wish)
     fetchPostRequest("POST", backendWishesURL, wishList)
