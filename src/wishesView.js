@@ -1,8 +1,9 @@
 import { createDiv, createInput, clearTextArea } from "./htmlUtils"
-import { createNewWish } from "./model"
+import { createNewWish, deleteWish, editWishBody, editWishTitle, editWishUrl } from "./model"
+import { fetchPostRequest, backendWishesURL } from "./utils"
 
 // rename to renderWishesView
-export const renderLayout = (parentElement, userName, wishList) => {
+export const renderWishesView = (parentElement, userName, wishList) => {
     parentElement.innerHTML = ""
     const userDiv = createDiv("userDiv", "userDiv")
     const otherUsersDiv = createDiv("otherUsersDiv", "otherUsersDiv")
@@ -15,39 +16,42 @@ export const renderLayout = (parentElement, userName, wishList) => {
     const addButton = createInput("button", "addButton", "addButton")
     addButton.setAttribute("value", "add")
     addButton.addEventListener("click", function (e) {
-        handleWishSubmit();
+        handleWishSubmit()
     })
     const titleArea = createInput("input", "enter wish title", "titleArea", "titleArea")
     titleArea.addEventListener("keypress", function (e) {
         if (e.keyCode !== 13) {
-            return;
+            return
         }
         handleWishSubmit()
     })
     const bodyArea = createInput("input", "enter wish body", "bodyArea", "bodyArea")
     bodyArea.addEventListener("keypress", function (e) {
-        if (e.keyCode == 13) {
-            return;
+        if (e.keyCode !== 13) {
+            return
         }
         handleWishSubmit()
     })
     const urlArea = createInput("input", "enter wish url", "urlArea", "urlArea")
     urlArea.addEventListener("keypress", function (e) {
         if (e.keyCode !== 13) {
-           return
+            return
         }
         handleWishSubmit()
     })
     parentElement.append(userDiv)
     parentElement.append(otherUsersDiv)
+    userDiv.append(userNameDiv)
     userDiv.append(utilsDiv)
     userDiv.append(wishesDiv)
-    userDiv.append(userNameDiv)
     utilsDiv.append(titleArea)
     utilsDiv.append(bodyArea)
     utilsDiv.append(urlArea)
     utilsDiv.append(buttonDiv)
     buttonDiv.append(addButton)
+    // should be triggered by model's change handler
+    renderWishes(wishList, userName, wishesDiv)
+    renderNotLoggedInWishes(wishList, userName, userList, otherUsersDiv)
 
     function handleWishSubmit() {
         const titleArea = document.getElementById("titleArea").value
@@ -59,41 +63,67 @@ export const renderLayout = (parentElement, userName, wishList) => {
         }
         if (!bodyArea) {
             alert("enter body")
-            return;
+            return
         }
         if (!urlArea) {
             alert("enter url")
-            return;
+            return
         }
         // this is model's responsibility
         createNewWish(titleArea, bodyArea, urlArea, userName, wishList)
-
-        // should be triggered by model's change handler
-        renderWishes(wishList)
-
+        renderWishes(wishList, userName, wishesDiv)
+        renderNotLoggedInWishes(wishList, userName, userList, otherUsersDiv)
         clearTextArea()
     }
 }
 
-export const renderWishes = (wishList, userName) => {
-    // don't relay on something exists in DOM tree
-    const wishesDiv = document.getElementById("wishesDiv")
-    const otherUsersDiv = document.getElementById("otherUsersDiv")
-    wishesDiv.innerHTML = ""
-    otherUsersDiv.innerHTML = ""
+export const renderWishes = (wishList, userName, divForRender) => {
+    divForRender.innerHTML = ""
     if (wishList) {
         wishList.forEach((wish, index) => {
-            const singleWish = createWishElement(wish, index)
+            const singleWish = createWishElement(wish, index, userName, wishesDiv)
             if (wish.userName === userName) {
                 wishesDiv.append(singleWish)
-            } else {
-                otherUsersDiv.append(singleWish)
             }
-        });
+        })
     }
 }
 
-const createWishElement = (wish, index) => {
+const renderNotLoggedInWishes = (wishList, userName, userList, divForRender) => {
+    divForRender.innerHTML = ""
+    userList.forEach(user => {
+        const notLoggedInUserDiv = createDiv("notLoggedInUserDiv", "notLoggedInUserDiv")
+        if (user.userName !== userName) {
+            notLoggedInUserDiv.innerText = user.userName
+            wishList.forEach((wish, index) => {
+                if (wish.userName == user.userName) {
+                    const singleWish = createWishElementForNotLoggedInUser(wish, index)
+                    notLoggedInUserDiv.append(singleWish)
+                }
+                divForRender.append(notLoggedInUserDiv)
+            })
+        }
+    })
+}
+
+const createWishElementForNotLoggedInUser = (wish, index) => {
+    const wishDiv = document.createElement("div")
+    const wishTitle = document.createElement("div")
+    const wishBody = document.createElement("div")
+    const wishUrl = document.createElement("div")
+    wishDiv.setAttribute("id", "singleWish")
+    wishDiv.setAttribute("class", "singleWish")
+    wishDiv.setAttribute("index", `${index}`)
+    wishTitle.innerHTML = wish.title
+    wishBody.innerHTML = wish.body
+    wishUrl.innerHTML = wish.url
+    wishDiv.append(wishTitle)
+    wishDiv.append(wishBody)
+    wishDiv.append(wishUrl)
+    return wishDiv
+}
+
+const createWishElement = (wish, index, userName, divForRender) => {
     const wishDiv = document.createElement("div")
     const wishTitle = document.createElement("div")
     const wishBody = document.createElement("div")
@@ -114,7 +144,8 @@ const createWishElement = (wish, index) => {
     deleteButton.addEventListener("click", function () {
         const wishIndex = wishDiv.getAttribute("index")
         deleteWish(wishList, wishIndex)
-        renderWishes(wishList)
+        divForRender.innerHTML = ""
+        renderWishes(wishList, userName, wishDiv)
         // better to call it performPostRequest
         fetchPostRequest("POST", backendWishesURL, wishList)
     })
@@ -128,7 +159,8 @@ const createWishElement = (wish, index) => {
         editWishTitle(wishList, wishIndex, editedTitle)
         editWishBody(wishList, wishIndex, editedBody)
         editWishUrl(wishList, wishIndex, editedUrl)
-        renderWishes(wishList)
+        divForRender.innerHTML = ""
+        renderWishes(wishList, userName, wishDiv)
         fetchPostRequest("POST", backendWishesURL, wishList)
     })
     editButtonImg.setAttribute("src", "./src/editButton.jpg")

@@ -15,9 +15,8 @@ export default class UserModel {
         return this._wishList
     }
 
-    setDayOfBirthday(DoB){
-        // use lowerCamelCase. UpperCamelCase is for classes only
-        this._dayOfBirthday = DoB
+    setDayOfBirthday(dayOfBirthday){
+        this._dayOfBirthday = dayOfBirthday
     }
 
     getDayOfBirthday(){
