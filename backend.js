@@ -1,6 +1,7 @@
 import {existsSync, readFile, mkdirSync, writeFileSync, readFileSync, writeFile} from 'fs'
 import express from 'express'
 import bodyParser from 'body-parser'
+import cookieParser from 'cookie-parser'
 import path from 'path'
 
 const app = express()
@@ -8,6 +9,7 @@ const port = 3000
 const dataPath = "./data"
 const usersFilePath = "./data/users.json"
 
+app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.static(path.resolve() + '/'));
@@ -15,6 +17,24 @@ app.use(bodyParser.json())
 
 
 // This are handlers for login and registation form
+
+const generateAuthToken = () => {
+    const tokenLength = 16
+    let result = ""
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+    const charactersLength = characters.length
+    for (let i = 0; i < tokenLength; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength))
+    }
+    return result
+}
+
+let authorisedUsers = {}
+
+const findUserByLogin = (userLogin) => {
+    const users = JSON.parse(readFileSync("data/users.json", "utf-8"))
+    return users.find(({login}) => login === userLogin)
+}
 
 app.post('/login', (req, res) => {
     const user = req.body;
@@ -24,19 +44,38 @@ app.post('/login', (req, res) => {
     if (!existsSync(usersFilePath)) {
         writeFileSync(usersFilePath, "[]")
     }
-    const users = JSON.parse(readFileSync("data/users.json", "utf-8"))
-    const userFound = users.find(singleUser => singleUser.login === user.login && singleUser.password === user.password)
-    if (userFound) {
+    const userFound = findUserByLogin(user.login)
+    if (userFound && userFound.password === user.password) {
         const userData = {
             "userName": userFound.userName,
             "DoB": userFound.DoB
         }
         console.log("login successful")
+        const cookieAge = 24 * 60 * 60 * 1000
+        const authToken = generateAuthToken()
+        authorisedUsers[authToken] = userFound.login
+        res.cookie('auth-token', authToken, {maxAge: cookieAge, httpOnly: true})
         res.status(200).send(userData)
     } else {
         console.log("user not found")
         res.status(401).send("user not found")
     }
+})
+
+app.post('/check-login', (req, res) => {
+    if (req.cookies) {
+        const authToken = req.cookies["auth-token"]
+        const userLogin = authorisedUsers[authToken]
+        if (userLogin) {
+            const user = findUserByLogin(userLogin)
+            res.status(200).send({
+                "userName": user.userName,
+                "DoB": user.DoB
+            })
+            return
+        }
+    }
+    res.status(401).send({})
 })
 
 app.post('/registration', (req, res) => {
@@ -63,26 +102,6 @@ app.post('/registration', (req, res) => {
         })
     }
 })
-
-// ------------------------------------------------
-
-// This are handlers for setting and getting cookies
-
-app.get('/setcookie', function (req, res) {
-    const users = JSON.parse(readFileSync("data/users.json", "utf-8"))
-    const userFound = users.find(singleUser => singleUser.login === user.login && singleUser.password === user.password)
-    res.cookie('username', 'john doe', {maxAge: 900000, httpOnly: true});
-    return res.send('Cookie has been set');
-});
-
-app.get('/getcookie', function (req, res) {
-    var username = req.cookies['username'];
-    if (username) {
-        return res.send(username);
-    }
-
-    return res.send('No cookie found');
-});
 
 //---------------------------------------------------
 

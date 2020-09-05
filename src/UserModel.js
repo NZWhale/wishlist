@@ -1,6 +1,9 @@
-export default class UserModel {
+import EventEmitter from "./EventEmitter";
+
+export default class UserModel extends EventEmitter {
     setUserName(userName){
         this._userName = userName
+        this.executeHandlers()
     }
 
     getUserName(){
@@ -9,6 +12,7 @@ export default class UserModel {
 
     setToWishList(wishList){
         this._wishList = wishList
+        this.executeHandlers()
     }
 
     getFromWishList(){
@@ -18,6 +22,7 @@ export default class UserModel {
     setDayOfBirthday(DoB){
         // use lowerCamelCase. UpperCamelCase is for classes only
         this._dayOfBirthday = DoB
+        this.executeHandlers()
     }
 
     getDayOfBirthday(){

@@ -3,7 +3,7 @@ export const backendWishesURL = "http://127.0.0.1:3000/wishes"
 // "http://82.146.33.4:3000/wishes"
 
 
-export function fetchPostRequest(method, url, body = null) {
+export function fetchPostRequest(method, url, body = {}) {
     const headers = {
         "Content-Type": "application/json"
     }
