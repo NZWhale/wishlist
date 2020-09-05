@@ -1,14 +1,15 @@
-import { existsSync, readFile, mkdirSync, writeFileSync, readFileSync, writeFile } from 'fs'
+import {existsSync, readFile, mkdirSync, writeFileSync, readFileSync, writeFile} from 'fs'
 import express from 'express'
 import bodyParser from 'body-parser'
 import path from 'path'
-import cookieParser from "cookie-parser"
+
 const app = express()
 const port = 3000
 const dataPath = "./data"
+const usersFilePath = "./data/users.json"
 
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.static(path.resolve() + '/'));
 app.use(bodyParser.json())
 
@@ -17,21 +18,24 @@ app.use(bodyParser.json())
 
 app.post('/login', (req, res) => {
     const user = req.body;
-    if (existsSync(dataPath)) {
-        const users = JSON.parse(readFileSync("data/users.json", "utf-8"))
-        const userFound = users.find(singleUser => singleUser.login === user.login && singleUser.password === user.password)
-        if (userFound) {
-            const userData = {
-                "userName": userFound.userName,
-                "DoB": userFound.DoB
-                }
-            console.log("login successful")
-            res.status(200).send(userData)
-        } else {
-            console.log("user not found")
-            // should be 401
-            res.status(404).send("user not found")
+    if (!existsSync(dataPath)) {
+        mkdirSync(dataPath)
+    }
+    if (!existsSync(usersFilePath)) {
+        writeFileSync(usersFilePath, "[]")
+    }
+    const users = JSON.parse(readFileSync("data/users.json", "utf-8"))
+    const userFound = users.find(singleUser => singleUser.login === user.login && singleUser.password === user.password)
+    if (userFound) {
+        const userData = {
+            "userName": userFound.userName,
+            "DoB": userFound.DoB
         }
+        console.log("login successful")
+        res.status(200).send(userData)
+    } else {
+        console.log("user not found")
+        res.status(401).send("user not found")
     }
 })
 
@@ -64,17 +68,17 @@ app.post('/registration', (req, res) => {
 
 // This are handlers for setting and getting cookies
 
-app.get('/setcookie', function(req, res){
+app.get('/setcookie', function (req, res) {
     const users = JSON.parse(readFileSync("data/users.json", "utf-8"))
     const userFound = users.find(singleUser => singleUser.login === user.login && singleUser.password === user.password)
-    res.cookie('username', 'john doe', { maxAge: 900000, httpOnly: true });
+    res.cookie('username', 'john doe', {maxAge: 900000, httpOnly: true});
     return res.send('Cookie has been set');
 });
 
-app.get('/getcookie', function(req, res) {
+app.get('/getcookie', function (req, res) {
     var username = req.cookies['username'];
     if (username) {
-        return res.send(username);        
+        return res.send(username);
     }
 
     return res.send('No cookie found');
@@ -119,7 +123,6 @@ app.post('/wishes', (req, res) => {
     }
 })
 // ------------------------------------------------
-
 
 
 app.listen(port, () => {
