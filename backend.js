@@ -9,14 +9,14 @@ const dataPath = "./data"
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
-app.use(express.static(path.resolve() + '/'));
+app.use(express.static(path.resolve() + '/'))
 app.use(bodyParser.json())
 
 
 // This are handlers for login and registation form
 
 app.post('/login', (req, res) => {
-    const user = req.body;
+    const user = req.body
     if (existsSync(dataPath)) {
         const users = JSON.parse(readFileSync("data/users.json", "utf-8"))
         const userFound = users.find(singleUser => singleUser.login === user.login && singleUser.password === user.password)
@@ -47,38 +47,61 @@ app.post('/registration', (req, res) => {
             users.push(user)
             writeFile('data/users.json', JSON.stringify(users), (err) => {
                 if (err) throw err
+                const userData = {
+                    "userName": user.userName,
+                    "DoB": user.DoB
+                    }
                 console.log("user successfully created")
-                res.status(200).send("user successfully created")
+                res.status(200).send(userData)
             })
         }
     } else {
         mkdirSync("data")
         writeFile('data/users.json', user, (err) => {
-            if (err) throw err;
-            console.log('The file has been saved!');
+            if (err) throw err
+            console.log('The file has been saved!')
         })
     }
 })
+// ------------------------------------------------
 
+// This handler for getting userlist
+
+app.get('/userlist', (req, res) => {
+    if (existsSync(dataPath)) {
+        let userlist = []
+        const users = JSON.parse(readFileSync("data/users.json", "utf-8"))
+        users.forEach(user => {
+          const singleUser = {
+            "userName": user.userName,
+            "DoB": user.DoB
+          }  
+          userlist.push(singleUser)
+        })
+        res.send(userlist)
+    } else {
+        res.status(404)
+    }
+})
 // ------------------------------------------------
 
 // This are handlers for setting and getting cookies
 
-app.get('/setcookie', function(req, res){
-    const users = JSON.parse(readFileSync("data/users.json", "utf-8"))
-    const userFound = users.find(singleUser => singleUser.login === user.login && singleUser.password === user.password)
-    res.cookie('username', 'john doe', { maxAge: 900000, httpOnly: true });
-    return res.send('Cookie has been set');
-});
+// app.get('/setcookie', function(req, res){
+//     const users = JSON.parse(readFileSync("data/users.json", "utf-8"))
+//     const userFound = users.find(singleUser => singleUser.login === user.login && singleUser.password === user.password)
+//     res.cookie('username', 'john doe', { maxAge: 900000, httpOnly: true })
+//     return res.send('Cookie has been set')
+// })
 
-app.get('/getcookie', function(req, res) {
-    var username = req.cookies['username'];
-    if (username) {
-        return res.send(username);        
-    }
+// app.get('/getcookie', function(req, res) {
+//     var username = req.cookies['username']
+//     if (username) {
+//         return res.send(username)        
+//     }
 
-    return res.send('No cookie found');
-});
+//     return res.send('No cookie found')
+// })
 
 //---------------------------------------------------
 
@@ -86,35 +109,35 @@ app.get('/getcookie', function(req, res) {
 app.get('/wishes', (req, res) => {
     if (existsSync(dataPath)) {
         readFile('data/wishes.json', (err, data) => {
-            if (err) throw err;
-            console.log(data);
+            if (err) throw err
+            console.log(data)
             res.send(data)
-        });
+        })
     } else {
         if (!existsSync("./data")) {
             mkdirSync("data")
             writeFileSync('data/wishes.json', "[]")
         }
         readFile('data/wishes.json', (err, data) => {
-            if (err) throw err;
-            console.log(data);
+            if (err) throw err
+            console.log(data)
             res.send(data)
-        });
+        })
     }
 })
 
 app.post('/wishes', (req, res) => {
-    const arrayOfWishes = req.body;
+    const arrayOfWishes = req.body
     if (existsSync(dataPath)) {
         writeFile('data/wishes.json', JSON.stringify(arrayOfWishes), (err) => {
-            if (err) throw err;
-            console.log('The file has been saved!');
-        });
+            if (err) throw err
+            console.log('The file has been saved!')
+        })
     } else {
         mkdirSync("data")
         writeFile('data/wishes.json', JSON.stringify(arrayOfWishes), (err) => {
-            if (err) throw err;
-            console.log('The file has been saved!');
+            if (err) throw err
+            console.log('The file has been saved!')
         })
     }
 })
