@@ -1,6 +1,6 @@
 export default class EventEmitter {
     constructor () {
-        this._handlers = [];
+        this._handlers = []
     }
 
     addChangeEventListener(handler) {
@@ -9,7 +9,7 @@ export default class EventEmitter {
 
     executeHandlers() {
         this._handlers.forEach((handler) => {
-            handler();
+            handler()
         })
     }
 }

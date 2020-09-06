@@ -1,8 +1,3 @@
-import { createNewWish, deleteWish, editWishTitle, editWishBody, editWishUrl } from "./model"
-import { renderWishes } from "./wishesView"
-import { backendWishesURL, fetchPostRequest } from "./utils"
-
-// cool! 
 export const createDiv = (idName, className) => {
     const div = document.createElement("div")
     div.setAttribute("id", `${idName}`)

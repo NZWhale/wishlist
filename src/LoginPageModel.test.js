@@ -1,20 +1,20 @@
-import LoginPageModel from "./LoginPageModel.js";
+import LoginPageModel from "./LoginPageModel.js"
 import assert from "assert"
 
 const testLoginPageModelHandlers = () => {
-    let handlerWasCalled = false;
+    let handlerWasCalled = false
 
-    const loginPageModel = new LoginPageModel();
+    const loginPageModel = new LoginPageModel()
     loginPageModel.addChangeEventListener(() => {
-        handlerWasCalled = true;
+        handlerWasCalled = true
     })
 
-    assert(loginPageModel.userIsLoggedIn === false, "Wrong default userIsLoggedIn value");
+    assert(loginPageModel.userIsLoggedIn === false, "Wrong default userIsLoggedIn value")
 
-    loginPageModel.setLoginStatus(true);
+    loginPageModel.setLoginStatus(true)
 
-    assert(loginPageModel.userIsLoggedIn === true, "userIsLoggedIn was not changed");
-    assert(handlerWasCalled === true, "Handler was not called");
+    assert(loginPageModel.userIsLoggedIn === true, "userIsLoggedIn was not changed")
+    assert(handlerWasCalled === true, "Handler was not called")
 }
 
-testLoginPageModelHandlers();
+testLoginPageModelHandlers()

@@ -53,16 +53,18 @@ export const renderLoginLayout = (parentElement, loginPageModelInstance, userMod
                             if (!DoBArea) {
                                 alert("enter your birthday")
                             } else {
-                                createNewUser(loginArea, passwordArea, userNameArea, DoBArea)
+                                createNewUser(loginArea, passwordArea, userNameArea, DoBArea, userModelInstance, loginPageModelInstance)
+                                userModelInstance.setDayOfBirthday(DoBArea)
+                                userModelInstance.setUserName(userNameArea)
                                 clearRegTextArea()
                             }
                         }
                     }
                 }
             } else {
-                createNewUser(loginArea, passwordArea, userNameArea, DoBArea)
-                userModelInstans.setDayOfBirthday(DoBArea)
-                userModelInstans.setUserName(userNameArea)
+                createNewUser(loginArea, passwordArea, userNameArea, DoBArea, userModelInstance, loginPageModelInstance)
+                userModelInstance.setDayOfBirthday(DoBArea)
+                userModelInstance.setUserName(userNameArea)
                 clearRegTextArea()
             }
         })

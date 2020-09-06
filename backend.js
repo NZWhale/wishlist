@@ -11,8 +11,8 @@ const usersFilePath = "./data/users.json"
 
 app.use(cookieParser())
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended: true}))
-app.use(express.static(path.resolve() + '/'));
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(express.static(path.resolve() + '/'))
 app.use(bodyParser.json())
 
 
@@ -90,16 +90,39 @@ app.post('/registration', (req, res) => {
             users.push(user)
             writeFile('data/users.json', JSON.stringify(users), (err) => {
                 if (err) throw err
+                const userData = {
+                    "userName": user.userName,
+                    "DoB": user.DoB
+                    }
                 console.log("user successfully created")
-                res.status(200).send("user successfully created")
+                res.status(200).send(userData)
             })
         }
     } else {
         mkdirSync("data")
         writeFile('data/users.json', user, (err) => {
-            if (err) throw err;
-            console.log('The file has been saved!');
+            if (err) throw err
+            console.log('The file has been saved!')
         })
+    }
+})
+
+// This handler for getting userlist
+
+app.get('/userlist', (req, res) => {
+    if (existsSync(dataPath)) {
+        let userlist = []
+        const users = JSON.parse(readFileSync("data/users.json", "utf-8"))
+        users.forEach(user => {
+          const singleUser = {
+            "userName": user.userName,
+            "DoB": user.DoB
+          }  
+          userlist.push(singleUser)
+        })
+        res.send(userlist)
+    } else {
+        res.status(404)
     }
 })
 
@@ -109,35 +132,35 @@ app.post('/registration', (req, res) => {
 app.get('/wishes', (req, res) => {
     if (existsSync(dataPath)) {
         readFile('data/wishes.json', (err, data) => {
-            if (err) throw err;
-            console.log(data);
+            if (err) throw err
+            console.log(data)
             res.send(data)
-        });
+        })
     } else {
         if (!existsSync("./data")) {
             mkdirSync("data")
             writeFileSync('data/wishes.json', "[]")
         }
         readFile('data/wishes.json', (err, data) => {
-            if (err) throw err;
-            console.log(data);
+            if (err) throw err
+            console.log(data)
             res.send(data)
-        });
+        })
     }
 })
 
 app.post('/wishes', (req, res) => {
-    const arrayOfWishes = req.body;
+    const arrayOfWishes = req.body
     if (existsSync(dataPath)) {
         writeFile('data/wishes.json', JSON.stringify(arrayOfWishes), (err) => {
-            if (err) throw err;
-            console.log('The file has been saved!');
-        });
+            if (err) throw err
+            console.log('The file has been saved!')
+        })
     } else {
         mkdirSync("data")
         writeFile('data/wishes.json', JSON.stringify(arrayOfWishes), (err) => {
-            if (err) throw err;
-            console.log('The file has been saved!');
+            if (err) throw err
+            console.log('The file has been saved!')
         })
     }
 })

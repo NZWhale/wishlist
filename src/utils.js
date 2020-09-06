@@ -1,4 +1,5 @@
 export const backendWishesURL = "http://127.0.0.1:3000/wishes"
+export const backendUserListURL = "http://127.0.0.1:3000/userlist"
 // "http://zverevn420.fvds.ru:3000/wishes"
 // "http://82.146.33.4:3000/wishes"
 
