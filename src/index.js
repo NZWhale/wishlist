@@ -19,11 +19,10 @@ window.addEventListener('load', async function () {
     userModelInstance.addChangeEventListener(render)
     friendsModelInstance.addChangeEventListener(render)
 
-    const resp = await fetchPostRequest("POST", backendCheckLoginURL)
-    if (resp.userName) {
-        userModelInstance.setUserName(resp.userName)
-        userModelInstance.setDayOfBirthday(resp.DoB)
-        loginPageModelInstance.setLoginStatus(true)
+    loginPageModelInstance.addChangeEventListener(async () => {
+        if (loginPageModelInstance.getLoginStatus() === false) {
+            return
+        }
         const wishList = await fetchGetRequest(backendWishesURL)
         if (wishList) {
             userModelInstance.setToWishList(wishList)
@@ -32,6 +31,13 @@ window.addEventListener('load', async function () {
         if (allUsersList) {
             friendsModelInstance.setFriendsList(allUsersList)
         }
+    })
+
+    const resp = await fetchPostRequest("POST", backendCheckLoginURL)
+    if (resp.userName) {
+        userModelInstance.setUserName(resp.userName)
+        userModelInstance.setDayOfBirthday(resp.DoB)
+        loginPageModelInstance.setLoginStatus(true)
     } else {
         loginPageModelInstance.setLoginStatus(false)
     }

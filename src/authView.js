@@ -13,7 +13,7 @@ export const renderLoginLayout = (parentElement, loginPageModelInstance, userMod
     loginButton.addEventListener("click", function (e) {
         const loginArea = document.getElementById("loginArea").value
         const passwordArea = document.getElementById("passwordArea").value
-        if (e.keyCode == 13) {
+        if (e.keyCode === 13) {
             if (!loginArea) {
                 alert("enter login")
             } else {
@@ -40,7 +40,7 @@ export const renderLoginLayout = (parentElement, loginPageModelInstance, userMod
             const passwordArea = document.getElementById("passwordArea").value
             const userNameArea = document.getElementById("userNameArea").value
             const DoBArea = document.getElementById("DoBArea").value
-            if (e.keyCode == 13) {
+            if (e.keyCode === 13) {
                 if (!loginArea) {
                     alert("enter login")
                 } else {
