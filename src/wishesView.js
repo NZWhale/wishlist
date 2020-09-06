@@ -26,7 +26,7 @@ export const renderLayout = (parentElement, userName, wishList) => {
     })
     const bodyArea = createInput("input", "enter wish body", "bodyArea", "bodyArea")
     bodyArea.addEventListener("keypress", function (e) {
-        if (e.keyCode == 13) {
+        if (e.keyCode !== 13) {
             return;
         }
         handleWishSubmit()
@@ -69,7 +69,7 @@ export const renderLayout = (parentElement, userName, wishList) => {
         createNewWish(titleArea, bodyArea, urlArea, userName, wishList)
 
         // should be triggered by model's change handler
-        renderWishes(wishList)
+        renderWishes(wishList, userName)
 
         clearTextArea()
     }

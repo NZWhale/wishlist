@@ -1,4 +1,4 @@
-import {renderLayout} from "./wishesView"
+import {renderLayout, renderWishes} from "./wishesView"
 import {backendCheckLoginURL, fetchPostRequest} from "./authUtils"
 import {renderLoginLayout} from "./authView"
 
@@ -38,6 +38,7 @@ window.addEventListener('load', async function () {
                 return
             }
             renderLayout(rootElement, userName, wishList, loginPageModelInstance)
+            renderWishes(wishList, userName)
         } else {
             renderLoginLayout(rootElement, loginPageModelInstance, userModelInstance)
         }
