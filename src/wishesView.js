@@ -125,21 +125,21 @@ const createWishElementForNotLoggedInUser = (wish, index) => {
 
 const createWishElement = (wish, index, userName, divForRender) => {
     const wishDiv = document.createElement("div")
-    const wishTitle = document.createElement("div")
-    const wishBody = document.createElement("div")
-    const wishUrl = document.createElement("div")
-    const deleteButton = createInput("button", "delete", "deleteButton", "deleteButton")
-    // why not create a function for creating images (e.g. createImgElement)
-    const deleteButtonImg = document.createElement("img")
-    const editButton = createInput("button", "edit", "editButton", "editButton")
-    const editButtonImg = document.createElement("img")
-    deleteButton.appendChild(deleteButtonImg)
+    const wishTitle = createDiv("wishTitle", "wishTitle")
+    const wishBody = createDiv("wishBody", "wishBody")
+    const wishUrl = document.createElement("a")
+    wishUrl.setAttribute("class", "wishUrl")
+    const deleteButton = createDiv("deleteButton", "emojiButton")
+    deleteButton.innerHTML = "❌"
+    const editButton = createDiv("editButton", "emojiButton")
+    editButton.innerHTML = "✏️"
     wishDiv.setAttribute("id", "singleWish")
     wishDiv.setAttribute("class", "singleWish")
     wishDiv.setAttribute("index", `${index}`)
     wishTitle.innerHTML = wish.title
     wishBody.innerHTML = wish.body
     wishUrl.innerHTML = wish.url
+    wishUrl.setAttribute("href", wish.url)
     // keep the order!
     deleteButton.addEventListener("click", function () {
         const wishIndex = wishDiv.getAttribute("index")
@@ -149,8 +149,6 @@ const createWishElement = (wish, index, userName, divForRender) => {
         // better to call it performPostRequest
         fetchPostRequest("POST", backendWishesURL, wishList)
     })
-    deleteButtonImg.setAttribute("src", "./src/deleteButton.jpg")
-    deleteButtonImg.setAttribute("class", "deleteButtonImg")
     editButton.addEventListener("click", function () {
         const wishIndex = wishDiv.getAttribute("index")
         const editedTitle = prompt("enter title")
@@ -163,14 +161,14 @@ const createWishElement = (wish, index, userName, divForRender) => {
         renderWishesList(wishList, userName, wishDiv)
         fetchPostRequest("POST", backendWishesURL, wishList)
     })
-    editButtonImg.setAttribute("src", "./src/editButton.jpg")
-    editButtonImg.setAttribute("class", "editButton")
-    deleteButton.append(deleteButtonImg)
-    editButton.append(editButtonImg)
     wishDiv.append(wishTitle)
     wishDiv.append(wishBody)
     wishDiv.append(wishUrl)
-    wishDiv.append(deleteButton)
-    wishDiv.append(editButton)
+
+    const buttonsDiv = createDiv("buttonsDiv", "buttonsDiv")
+    buttonsDiv.append(deleteButton)
+    buttonsDiv.append(editButton)
+
+    wishDiv.append(buttonsDiv)
     return wishDiv
 }

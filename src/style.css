@@ -35,63 +35,8 @@ input[type="button"] {
     border: none;
 }
 
-.userDiv {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    justify-content: space-between;
-    margin: 100px 0;
-}
-
-.utilsDiv {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    text-align: right;
-    min-width: 100px;
-    width: auto;
-    margin: 20px 20px;
-    min-height: auto;
-}
-
 .buttonDiv {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-}
-
-.singleWish {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    text-align: center;
-    min-width: 100px;
-    width: auto;
-    margin: 20px 20px;
-    min-height: auto;
-    box-shadow: 0px 0px 7px 5px rgba(9, 54, 200, 0.281);
-    background-color: #f0f2f5;
-    overflow: hidden;
-}
-
-.deleteButtonImg {
-    width: 15px;
-    height: 15px;
-}
-
-.deleteButton {
-    margin-left: 80%;
-    width: 20px;
-    height: 20px;
-}
-
-.editButtonImg {
-    width: 15px;
-    height: 15px;
-}
-
-.editButton {
-    margin-left: 80%;
-    width: 20px;
-    height: 20px;
 }

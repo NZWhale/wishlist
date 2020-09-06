@@ -1,0 +1,55 @@
+.userDiv {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 16px;
+    padding: 0 12px;
+}
+
+.utilsDiv {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 32px;
+}
+
+.utilsDiv > * {
+    margin-bottom: 10px;
+}
+
+.utilsDiv > *:last-child {
+    margin-bottom: 0px;
+}
+
+.singleWish {
+    border-bottom: 1px solid #e9e9e9;
+}
+
+.userNameDiv {
+    font-size: 26px;
+    margin-bottom: 16px;
+}
+
+.emojiButton {
+    font-size: 24px;
+}
+
+.buttonsDiv {
+    display: flex;
+    justify-content: space-around;
+    padding: 8px;
+}
+
+.wishTitle {
+    font-size: 20px;
+    padding: 12px 0;
+}
+
+.wishBody {
+    font-size: 14px;
+}
+
+.wishUrl {
+    font-size: 14px;
+    color: #b138d0
+}
