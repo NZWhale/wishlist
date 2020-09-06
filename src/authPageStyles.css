@@ -1,0 +1,13 @@
+#authDiv {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 10%;
+    box-sizing: border-box;
+    justify-content: center;
+}
+
+#authDiv > * {
+    margin-bottom: 10px;
+}
