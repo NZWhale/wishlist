@@ -6,11 +6,20 @@ export const createDiv = (idName, className) => {
 }
 
 export const createInput = (type, placeholder, idName, className) => {
-    const button = document.createElement("input")
-    button.setAttribute("type", `${type}`)
+    const input = document.createElement("input")
+    input.setAttribute("type", `${type}`)
+    input.setAttribute("id", `${idName}`)
+    input.setAttribute("class", `${className}`)
+    input.setAttribute("placeholder", `${placeholder}`)
+    return input
+}
+
+export const createButton = (idName, className, value = null) => {
+    const button = document.createElement("button")
+    button.setAttribute("type", "button")
     button.setAttribute("id", `${idName}`)
     button.setAttribute("class", `${className}`)
-    button.setAttribute("placeholder", `${placeholder}`)
+    button.setAttribute("value", `${value}`)
     return button
 }
 

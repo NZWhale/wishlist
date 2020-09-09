@@ -1,4 +1,4 @@
-import { createDiv, createInput, clearTextArea, deleteCookie } from "./htmlUtils"
+import { createDiv, createInput, clearTextArea, deleteCookie, createButton } from "./htmlUtils"
 import { createNewWish, deleteWish, editWishBody, editWishTitle, editWishUrl } from "./model";
 import { backendWishesURL, fetchPostRequest } from "./utils";
 
@@ -100,13 +100,28 @@ const renderNotLoggedInWishes = (wishList, userName, friendsList, divForRender) 
     divForRender.innerHTML = ""
     friendsList.forEach(user => {
         const notLoggedInUserDiv = createDiv("notLoggedInUserDiv", "notLoggedInUserDiv")
+        const otherUserDiv = createDiv("otherUsersWishDiv", "otherUsersWishDiv")
+        const accordionButton = createButton("accordion", "accordion")
         if (user.userName !== userName) {
-            notLoggedInUserDiv.innerText = user.userName
+            accordionButton.innerText = user.userName
+            notLoggedInUserDiv.append(accordionButton)
             wishList.forEach((wish, index) => {
                 if (wish.userName === user.userName) {
                     const singleWish = createWishElementForNotLoggedInUser(wish, index)
-                    notLoggedInUserDiv.append(singleWish)
+                    otherUserDiv.append(singleWish)
                 }
+                accordionButton.onclick = function () {
+                    this.classList.toggle('is-open');
+
+                    const content = this.nextElementSibling
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    }
+                }
+                notLoggedInUserDiv.append(accordionButton)
+                notLoggedInUserDiv.append(otherUserDiv)
                 divForRender.append(notLoggedInUserDiv)
             })
         }
@@ -181,3 +196,8 @@ const createWishElement = (wish, index, userName, divForRender, wishlist) => {
     wishDiv.append(buttonsDiv)
     return wishDiv
 }
+
+
+
+
+
