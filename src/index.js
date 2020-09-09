@@ -1,10 +1,10 @@
-import {renderWishesView} from "./wishesView"
-import {backendCheckLoginURL, fetchPostRequest} from "./authUtils"
-import {renderLoginLayout} from "./authView"
+import { renderWishesView } from "./wishesView"
+import { backendCheckLoginURL, fetchPostRequest } from "./authUtils"
+import { renderLoginLayout } from "./authView"
 
 import LoginPageModel from "./LoginPageModel"
 import UserModel from "./UserModel"
-import {backendUserListURL, backendWishesURL, fetchGetRequest} from "./utils"
+import { backendUserListURL, backendWishesURL, fetchGetRequest } from "./utils"
 import FriendsModel from "./FriendsModel";
 
 
@@ -13,6 +13,7 @@ window.addEventListener('load', async function () {
     const loginPageModelInstance = new LoginPageModel()
     const userModelInstance = new UserModel()
     const friendsModelInstance = new FriendsModel()
+    window.loginPageModelInstance = loginPageModelInstance
     // TODO: better to call it performGetRequest
 
     loginPageModelInstance.addChangeEventListener(render)
@@ -24,10 +25,12 @@ window.addEventListener('load', async function () {
             return
         }
         const wishList = await fetchGetRequest(backendWishesURL)
+        window.wishList = wishList
         if (wishList) {
             userModelInstance.setToWishList(wishList)
         }
         const allUsersList = await fetchGetRequest(backendUserListURL)
+
         if (allUsersList) {
             friendsModelInstance.setFriendsList(allUsersList)
         }
@@ -42,10 +45,12 @@ window.addEventListener('load', async function () {
         loginPageModelInstance.setLoginStatus(false)
     }
 
+
     function render() {
         // TODO: don't forget about negative scenarios
-        const userName = userModelInstance.getUserName()
-        if (userName) {
+        const loginStatus = loginPageModelInstance.getLoginStatus()
+        if (loginStatus === true) {
+            const userName = userModelInstance.getUserName()
             const wishList = userModelInstance.getFromWishList()
             if (!wishList) {
                 return
@@ -54,8 +59,7 @@ window.addEventListener('load', async function () {
             if (!friendsList) {
                 return
             }
-            renderWishesView(rootElement, userName, wishList, friendsList)
-            // renderWishes(wishList, userName)
+            renderWishesView(rootElement, userName, wishList, friendsList, loginPageModelInstance)
         } else {
             renderLoginLayout(rootElement, loginPageModelInstance, userModelInstance)
         }

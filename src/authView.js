@@ -3,6 +3,7 @@ import { clearRegTextArea } from "./authHtmlUtils"
 import { login, createNewUser } from "./authModel"
 
 export const renderLoginLayout = (parentElement, loginPageModelInstance, userModelInstance) => {
+    parentElement.innerHTML = ""
     const authDiv = createDiv("authDiv", "authDiv")
     const loginArea = createInput("input", "enter login", "loginArea", "loginArea")
     const passwordArea = createInput("input", "enter password", "passwordArea", "passwordArea")

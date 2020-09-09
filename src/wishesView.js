@@ -1,9 +1,9 @@
-import {createDiv, createInput, clearTextArea} from "./htmlUtils"
-import {createNewWish, deleteWish, editWishBody, editWishTitle, editWishUrl} from "./model";
-import {backendWishesURL, fetchPostRequest} from "./utils";
+import { createDiv, createInput, clearTextArea, deleteCookie } from "./htmlUtils"
+import { createNewWish, deleteWish, editWishBody, editWishTitle, editWishUrl } from "./model";
+import { backendWishesURL, fetchPostRequest } from "./utils";
 
 // rename to renderWishesView
-export const renderWishesView = (parentElement, userName, wishList, friendsList) => {
+export const renderWishesView = (parentElement, userName, wishList, friendsList, loginPageModelInstans) => {
     parentElement.innerHTML = ""
     const userDiv = createDiv("userDiv", "userDiv")
     const otherUsersDiv = createDiv("otherUsersDiv", "otherUsersDiv")
@@ -13,6 +13,12 @@ export const renderWishesView = (parentElement, userName, wishList, friendsList)
     const utilsDiv = createDiv("utilsDiv", "utilsDiv")
     const buttonDiv = createDiv("buttonDiv", "buttonDiv")
     // create separate function for creating buttons
+    const exitButton = createInput("button", "exit", "exitButton", "exitButton")
+    exitButton.setAttribute("value", "exit")
+    exitButton.addEventListener("click", function () {
+        deleteCookie("auth-token")
+        loginPageModelInstans.setLoginStatus(false)
+    })
     const addButton = createInput("button", "addButton", "addButton")
     addButton.setAttribute("value", "add")
     addButton.addEventListener("click", function (e) {
@@ -48,6 +54,7 @@ export const renderWishesView = (parentElement, userName, wishList, friendsList)
     utilsDiv.append(bodyArea)
     utilsDiv.append(urlArea)
     utilsDiv.append(buttonDiv)
+    userNameDiv.append(exitButton)
     buttonDiv.append(addButton)
     // should be triggered by model's change handler
     renderWishesList(wishList, userName, wishesDiv)
@@ -72,7 +79,7 @@ export const renderWishesView = (parentElement, userName, wishList, friendsList)
         // this is model's responsibility
         createNewWish(titleArea, bodyArea, urlArea, userName, wishList)
         renderWishesList(wishList, userName, wishesDiv)
-        renderNotLoggedInWishes(wishList, userName, userList, otherUsersDiv)
+        renderNotLoggedInWishes(wishList, userName, friendsList, otherUsersDiv)
         clearTextArea()
     }
 }
@@ -81,7 +88,7 @@ export const renderWishesList = (wishList, userName, divForRender) => {
     divForRender.innerHTML = ""
     if (wishList) {
         wishList.forEach((wish, index) => {
-            const singleWish = createWishElement(wish, index, userName, wishesDiv)
+            const singleWish = createWishElement(wish, index, userName, wishesDiv, wishList)
             if (wish.userName === userName) {
                 wishesDiv.append(singleWish)
             }
@@ -89,9 +96,9 @@ export const renderWishesList = (wishList, userName, divForRender) => {
     }
 }
 
-const renderNotLoggedInWishes = (wishList, userName, userList, divForRender) => {
+const renderNotLoggedInWishes = (wishList, userName, friendsList, divForRender) => {
     divForRender.innerHTML = ""
-    userList.forEach(user => {
+    friendsList.forEach(user => {
         const notLoggedInUserDiv = createDiv("notLoggedInUserDiv", "notLoggedInUserDiv")
         if (user.userName !== userName) {
             notLoggedInUserDiv.innerText = user.userName
@@ -108,9 +115,11 @@ const renderNotLoggedInWishes = (wishList, userName, userList, divForRender) => 
 
 const createWishElementForNotLoggedInUser = (wish, index) => {
     const wishDiv = document.createElement("div")
-    const wishTitle = document.createElement("div")
-    const wishBody = document.createElement("div")
-    const wishUrl = document.createElement("div")
+    const wishTitle = createDiv("wishTitle", "wishTitle")
+    const wishBody = createDiv("wishBody", "wishBody")
+    const wishUrl = document.createElement("a")
+    wishUrl.setAttribute("class", "wishUrl")
+    wishUrl.setAttribute("href", wish.url)
     wishDiv.setAttribute("id", "singleWish")
     wishDiv.setAttribute("class", "singleWish")
     wishDiv.setAttribute("index", `${index}`)
@@ -123,7 +132,7 @@ const createWishElementForNotLoggedInUser = (wish, index) => {
     return wishDiv
 }
 
-const createWishElement = (wish, index, userName, divForRender) => {
+const createWishElement = (wish, index, userName, divForRender, wishlist) => {
     const wishDiv = document.createElement("div")
     const wishTitle = createDiv("wishTitle", "wishTitle")
     const wishBody = createDiv("wishBody", "wishBody")

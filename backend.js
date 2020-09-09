@@ -54,7 +54,7 @@ app.post('/login', (req, res) => {
         const cookieAge = 24 * 60 * 60 * 1000
         const authToken = generateAuthToken()
         authorisedUsers[authToken] = userFound.login
-        res.cookie('auth-token', authToken, {maxAge: cookieAge, httpOnly: true})
+        res.cookie('auth-token', authToken, {maxAge: cookieAge, httpOnly: false})
         res.status(200).send(userData)
     } else {
         console.log("user not found")
