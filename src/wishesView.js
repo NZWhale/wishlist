@@ -5,9 +5,20 @@ import { backendWishesURL, fetchPostRequest } from "./utils";
 // rename to renderWishesView
 export const renderWishesView = (parentElement, userName, wishList, friendsList, loginPageModelInstans) => {
     parentElement.innerHTML = ""
+    const utilsAndWishesDiv = createDiv("utilsAndWishesDiv", "utilsAndWishesDiv")
     const userDiv = createDiv("userDiv", "userDiv")
     const otherUsersDiv = createDiv("otherUsersDiv", "otherUsersDiv")
-    const userNameDiv = createDiv("userNameDiv", "userNameDiv")
+    const userNameDiv = createButton("userNameDiv", "userNameDiv")
+    userNameDiv.onclick = function () {
+        this.classList.toggle('is-open');
+
+        const content = this.nextElementSibling
+        if (content.style.maxHeight) {
+            content.style.maxHeight = null;
+        } else {
+            content.style.maxHeight = content.scrollHeight + "px";
+        }
+    }
     userNameDiv.innerHTML = userName
     const wishesDiv = createDiv("wishesDiv", "wishesDiv")
     const utilsDiv = createDiv("utilsDiv", "utilsDiv")
@@ -49,11 +60,12 @@ export const renderWishesView = (parentElement, userName, wishList, friendsList,
     parentElement.append(otherUsersDiv)
     userDiv.append(userNameDiv)
     userDiv.append(utilsDiv)
-    userDiv.append(wishesDiv)
+    // userDiv.append(wishesDiv)
     utilsDiv.append(titleArea)
     utilsDiv.append(bodyArea)
     utilsDiv.append(urlArea)
     utilsDiv.append(buttonDiv)
+    utilsDiv.append(wishesDiv)
     userNameDiv.append(exitButton)
     buttonDiv.append(addButton)
     // should be triggered by model's change handler
