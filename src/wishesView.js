@@ -1,9 +1,9 @@
-import { createDiv, createInput, clearTextArea, deleteCookie, createButton } from "./htmlUtils"
+import { createDiv, createElement, createInput, clearTextArea, deleteCookie, createButton } from "./htmlUtils"
 import { createNewWish, deleteWish, editWishBody, editWishTitle, editWishUrl } from "./model";
 import { backendWishesURL, fetchPostRequest } from "./utils";
+import { initializeClock, createTimerElements } from "./timer"
 
-// rename to renderWishesView
-export const renderWishesView = (parentElement, userName, wishList, friendsList, loginPageModelInstans) => {
+export const renderWishesView = (parentElement, userName, userDayOfBirthday, wishList, friendsList, loginPageModelInstans) => {
     parentElement.innerHTML = ""
     const utilsAndWishesDiv = createDiv("utilsAndWishesDiv", "utilsAndWishesDiv")
     const userDiv = createDiv("userDiv", "userDiv")
@@ -22,6 +22,7 @@ export const renderWishesView = (parentElement, userName, wishList, friendsList,
     userNameDiv.innerHTML = userName
     const wishesDiv = createDiv("wishesDiv", "wishesDiv")
     const utilsDiv = createDiv("utilsDiv", "utilsDiv")
+    const innerImgDiv = createDiv("innerImgDiv", "innerImgDiv")
     const buttonDiv = createDiv("buttonDiv", "buttonDiv")
     // create separate function for creating buttons
     const exitButton = createInput("button", "exit", "exitButton", "exitButton")
@@ -56,21 +57,26 @@ export const renderWishesView = (parentElement, userName, wishList, friendsList,
         }
         handleWishSubmit()
     })
+    const timerElements = createTimerElements()
     parentElement.append(userDiv)
     parentElement.append(otherUsersDiv)
     userDiv.append(userNameDiv)
     userDiv.append(utilsDiv)
-    // userDiv.append(wishesDiv)
     utilsDiv.append(titleArea)
     utilsDiv.append(bodyArea)
     utilsDiv.append(urlArea)
+    utilsDiv.append(innerImgDiv)
     utilsDiv.append(buttonDiv)
     utilsDiv.append(wishesDiv)
     userNameDiv.append(exitButton)
+    userNameDiv.append(timerElements)
     buttonDiv.append(addButton)
     // should be triggered by model's change handler
     renderWishesList(wishList, userName, wishesDiv)
+    // const endtime = "September 28 2021 00:00:00 GMT+0300"
+    initializeClock(timerElements, userDayOfBirthday)
     renderNotLoggedInWishes(wishList, userName, friendsList, otherUsersDiv)
+
 
     function handleWishSubmit() {
         const titleArea = document.getElementById("titleArea").value
@@ -208,8 +214,5 @@ const createWishElement = (wish, index, userName, divForRender, wishlist) => {
     wishDiv.append(buttonsDiv)
     return wishDiv
 }
-
-
-
 
 

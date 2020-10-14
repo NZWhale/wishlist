@@ -51,6 +51,7 @@ window.addEventListener('load', async function () {
         const loginStatus = loginPageModelInstance.getLoginStatus()
         if (loginStatus === true) {
             const userName = userModelInstance.getUserName()
+            const userDayOfBirthday = userModelInstance.getDayOfBirthday()
             const wishList = userModelInstance.getFromWishList()
             if (!wishList) {
                 return
@@ -59,7 +60,7 @@ window.addEventListener('load', async function () {
             if (!friendsList) {
                 return
             }
-            renderWishesView(rootElement, userName, wishList, friendsList, loginPageModelInstance)
+            renderWishesView(rootElement, userName, userDayOfBirthday, wishList, friendsList, loginPageModelInstance)
         } else {
             renderLoginLayout(rootElement, loginPageModelInstance, userModelInstance)
         }

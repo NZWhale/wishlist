@@ -8,7 +8,7 @@ export const renderLoginLayout = (parentElement, loginPageModelInstance, userMod
     const loginArea = createInput("input", "enter login", "loginArea", "loginArea")
     const passwordArea = createInput("input", "enter password", "passwordArea", "passwordArea")
     const userNameArea = createInput("input", "enter username", "userNameArea", "userNameArea")
-    const DoBArea = createInput("input", "enter your birthday", "DoBArea", "DoBArea")
+    const DoBArea = createInput("date", "enter your birthday", "DoBArea", "DoBArea")
     const loginButton = createInput("button", "Log In", "loginButton", "loginButton")
     loginButton.setAttribute("value", "LogIn")
     loginButton.addEventListener("click", function (e) {

@@ -1,4 +1,6 @@
 import { fetchPostRequest, logHandler, regHandler } from "./authUtils"
+import UserModel from "./UserModel"
+import LoginPageModel from "./LoginPageModel"
 
 export const createNewUser = (login, password, userName, DoB, userModelInstance, loginPageModelInstance) => {
     const newUser = {
@@ -8,7 +10,6 @@ export const createNewUser = (login, password, userName, DoB, userModelInstance,
         DoB: DoB
     }
     const registrationResponsePromise = fetchPostRequest("POST", regHandler, newUser)
-    // const cookieResponsePromise = fetchPostRequest("POST", cookieHandler, userData)
     registrationResponsePromise.then((response) => {
         if (!response.status) {
             userModelInstance.setUserName(response.userName)

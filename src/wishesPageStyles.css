@@ -44,11 +44,34 @@
     background-color: white;
 }
 
+/* .wishesDiv {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 32px;
+    background-color: white;
+    border-left: 1px solid whitesmoke;
+    border-right: 1px solid whitesmoke;
+    padding: 0 20px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-in-out;
+}
+
+.wishesDiv > * {
+    margin-bottom: 10px;
+}
+
+.wishesDiv > *:last-child {
+    margin-bottom: 0px;
+    background-color: white;
+} */
+
 .singleWish {
     border-bottom: 1px solid #e9e9e9;
 }
 
 .userNameDiv {
+    border-radius: 10px;
     font-size: 26px;
     margin-bottom: 16px;
     width: 100%;
@@ -105,6 +128,6 @@ button.userNameDiv:after {
 }
 
 .exitButton {
-    margin-left: 188px;
+    margin-left: 70%;
 
 }

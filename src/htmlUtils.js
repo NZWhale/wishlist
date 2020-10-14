@@ -5,6 +5,13 @@ export const createDiv = (idName, className) => {
     return div
 }
 
+export const createElement = (htmlEl, idName, className) => {
+  const htmlElement = document.createElement(htmlEl)
+  htmlElement.setAttribute("id", `${idName}`)
+  htmlElement.setAttribute("class", `${className}`)
+  return htmlElement
+}
+
 export const createInput = (type, placeholder, idName, className) => {
     const input = document.createElement("input")
     input.setAttribute("type", `${type}`)

@@ -44,6 +44,7 @@ input[type="button"] {
 
 button.accordion {
     width: 100%;
+    border-radius: 10px;
     background-color: #d4ccda;
     border: none;
     outline: none;
@@ -80,4 +81,13 @@ button.accordion {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.2s ease-in-out;
+  }
+
+  .clock > div {
+    font-family: sans-serif;
+    color: rgb(224, 13, 13);
+    display: inline-block;
+    font-weight: 100;
+    text-align: center;
+    font-size: 30px;
   }
