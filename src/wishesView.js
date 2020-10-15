@@ -1,7 +1,7 @@
 import { createDiv, createElement, createInput, clearTextArea, deleteCookie, createButton } from "./htmlUtils"
 import { createNewWish, deleteWish, editWishBody, editWishTitle, editWishUrl } from "./model";
 import { backendWishesURL, fetchPostRequest } from "./utils";
-import { initializeClock, createTimerElements } from "./timer"
+import { initializeClock, createTimerElements, createTimerElementsForFriends } from "./timer"
 
 export const renderWishesView = (parentElement, userName, userDayOfBirthday, wishList, friendsList, loginPageModelInstans) => {
     parentElement.innerHTML = ""
@@ -121,6 +121,8 @@ const renderNotLoggedInWishes = (wishList, userName, friendsList, divForRender) 
         const otherUserDiv = createDiv("otherUsersWishDiv", "otherUsersWishDiv")
         const accordionButton = createButton("accordion", "accordion")
         if (user.userName !== userName) {
+            const timerElements = createTimerElementsForFriends(user.userName)
+            const userDayOfBirthday = user.DoB
             accordionButton.innerText = user.userName
             notLoggedInUserDiv.append(accordionButton)
             wishList.forEach((wish, index) => {
@@ -130,7 +132,7 @@ const renderNotLoggedInWishes = (wishList, userName, friendsList, divForRender) 
                 }
                 accordionButton.onclick = function () {
                     this.classList.toggle('is-open');
-
+                    
                     const content = this.nextElementSibling
                     if (content.style.maxHeight) {
                         content.style.maxHeight = null;
@@ -141,6 +143,8 @@ const renderNotLoggedInWishes = (wishList, userName, friendsList, divForRender) 
                 notLoggedInUserDiv.append(accordionButton)
                 notLoggedInUserDiv.append(otherUserDiv)
                 divForRender.append(notLoggedInUserDiv)
+                accordionButton.append(timerElements)
+                initializeClock(timerElements, userDayOfBirthday)
             })
         }
     })

@@ -6,7 +6,7 @@ export const renderLoginLayout = (parentElement, loginPageModelInstance, userMod
     parentElement.innerHTML = ""
     const authDiv = createDiv("authDiv", "authDiv")
     const loginArea = createInput("input", "enter login", "loginArea", "loginArea")
-    const passwordArea = createInput("input", "enter password", "passwordArea", "passwordArea")
+    const passwordArea = createInput("password", "enter password", "passwordArea", "passwordArea")
     const userNameArea = createInput("input", "enter username", "userNameArea", "userNameArea")
     const DoBArea = createInput("date", "enter your birthday", "DoBArea", "DoBArea")
     const loginButton = createInput("button", "Log In", "loginButton", "loginButton")
@@ -57,7 +57,7 @@ export const renderLoginLayout = (parentElement, loginPageModelInstance, userMod
                                 createNewUser(loginArea, passwordArea, userNameArea, DoBArea, userModelInstance, loginPageModelInstance)
                                 userModelInstance.setDayOfBirthday(DoBArea)
                                 userModelInstance.setUserName(userNameArea)
-                                clearRegTextArea()
+                                // clearRegTextArea()
                             }
                         }
                     }
@@ -66,7 +66,7 @@ export const renderLoginLayout = (parentElement, loginPageModelInstance, userMod
                 createNewUser(loginArea, passwordArea, userNameArea, DoBArea, userModelInstance, loginPageModelInstance)
                 userModelInstance.setDayOfBirthday(DoBArea)
                 userModelInstance.setUserName(userNameArea)
-                clearRegTextArea()
+                // clearRegTextArea()
             }
         })
         authDiv.append(loginArea, passwordArea, userNameArea, DoBArea, compliteRegButton, backButton)

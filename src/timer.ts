@@ -27,6 +27,32 @@ export const createTimerElements = (): HTMLElement => {
     return clockDiv
 }
 
+export const createTimerElementsForFriends = (username): HTMLElement => {
+    const clockDiv: HTMLElement = createDiv(`clock${username}`, `clock${username}`)
+    const daysDiv: HTMLElement = createDiv("daysDiv", "daysDiv")
+    const hoursDiv: HTMLElement = createDiv("hoursDiv", "hoursDiv")
+    const minutesDiv: HTMLElement = createDiv("minutesDiv", "minutesDiv")
+    const secondsDiv: HTMLElement = createDiv("secondsDiv", "secondsDiv")
+    const daysCount: HTMLElement = createElement("span", "daysCount", "daysCount")
+    const hoursCount: HTMLElement = createElement("span", "hoursCount", "hoursCount")
+    const minutesCount: HTMLElement = createElement("span", "minutesCount", "minutesCount")
+    const secondsCount: HTMLElement = createElement("span", "secondsCount", "secondsCount")
+    const daysCountText: HTMLElement = createElement("span", "daysCountText", "daysCountText")
+    const hoursCountText: HTMLElement = createElement("span", "hoursCountText", "hoursCountText")
+    const minutesCountText: HTMLElement = createElement("span", "minutesCountText", "minutesCountText")
+    const secondsCountText: HTMLElement = createElement("span", "secondsCountText", "secondsCountText")
+    daysCountText.innerText = "D"
+    hoursCountText.innerText = "H"
+    minutesCountText.innerText = "M"
+    secondsCountText.innerText = "S"
+    daysDiv.append(daysCount, daysCountText)
+    hoursDiv.append(hoursCount, hoursCountText)
+    minutesDiv.append(minutesCount, minutesCountText)
+    secondsDiv.append(secondsCount, secondsCountText)
+    clockDiv.append(daysDiv, hoursDiv, minutesDiv, secondsDiv)
+    return clockDiv
+}
+
 const getTimeRemaining = (dateOfBirthday): object => {
     let birthDate = new Date(dateOfBirthday)
     let month = birthDate.getMonth()
@@ -37,7 +63,15 @@ const getTimeRemaining = (dateOfBirthday): object => {
     const seconds: number = Math.floor((timeToBirthday / 1000) % 60)
     const minutes: number = Math.floor((timeToBirthday / 1000 / 60) % 60)
     const hours: number = Math.floor((timeToBirthday / (1000 * 60 * 60)) % 24)
-    const days: number = Math.floor(timeToBirthday / (1000 * 60 * 60 * 24))
+    let days: number = Math.floor(timeToBirthday / (1000 * 60 * 60 * 24))
+    
+    if (days > 365) {
+        days = days - 365
+    }
+    if (days == 365) {
+        days = 0
+    }
+
     return {
         'total': timeToBirthday,
         'days': days,
@@ -49,10 +83,10 @@ const getTimeRemaining = (dateOfBirthday): object => {
 
 export const initializeClock = (renderElement: HTMLElement, endtime: number): void => {
     const clock: HTMLElement = renderElement
-    const daysSpan: HTMLElement = document.getElementById('daysCount')
-    const hoursSpan: HTMLElement = document.getElementById('hoursCount')
-    const minutesSpan: HTMLElement = document.getElementById('minutesCount')
-    const secondsSpan: HTMLElement = document.getElementById('secondsCount')
+    const daysSpan: HTMLElement = renderElement.querySelector('.daysCount')
+    const hoursSpan: HTMLElement = renderElement.querySelector('.hoursCount')
+    const minutesSpan: HTMLElement = renderElement.querySelector('.minutesCount')
+    const secondsSpan: HTMLElement = renderElement.querySelector('.secondsCount')
 
     function updateClock() {
         const timer: any = getTimeRemaining(endtime)
