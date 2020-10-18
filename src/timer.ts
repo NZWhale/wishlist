@@ -15,10 +15,10 @@ export const createTimerElements = (): HTMLElement => {
     const hoursCountText: HTMLElement = createElement("span", "hoursCountText", "hoursCountText")
     const minutesCountText: HTMLElement = createElement("span", "minutesCountText", "minutesCountText")
     const secondsCountText: HTMLElement = createElement("span", "secondsCountText", "secondsCountText")
-    daysCountText.innerText = "D"
-    hoursCountText.innerText = "H"
-    minutesCountText.innerText = "M"
-    secondsCountText.innerText = "S"
+    daysCountText.innerText = " Days "
+    hoursCountText.innerText = ":"
+    minutesCountText.innerText = ":"
+    secondsCountText.innerText = ""
     daysDiv.append(daysCount, daysCountText)
     hoursDiv.append(hoursCount, hoursCountText)
     minutesDiv.append(minutesCount, minutesCountText)
@@ -41,10 +41,10 @@ export const createTimerElementsForFriends = (username): HTMLElement => {
     const hoursCountText: HTMLElement = createElement("span", "hoursCountText", "hoursCountText")
     const minutesCountText: HTMLElement = createElement("span", "minutesCountText", "minutesCountText")
     const secondsCountText: HTMLElement = createElement("span", "secondsCountText", "secondsCountText")
-    daysCountText.innerText = "D"
-    hoursCountText.innerText = "H"
-    minutesCountText.innerText = "M"
-    secondsCountText.innerText = "S"
+    daysCountText.innerText = " Days "
+    hoursCountText.innerText = ":"
+    minutesCountText.innerText = ":"
+    secondsCountText.innerText = ""
     daysDiv.append(daysCount, daysCountText)
     hoursDiv.append(hoursCount, hoursCountText)
     minutesDiv.append(minutesCount, minutesCountText)

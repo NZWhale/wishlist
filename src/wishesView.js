@@ -9,7 +9,8 @@ export const renderWishesView = (parentElement, userName, userDayOfBirthday, wis
     const userDiv = createDiv("userDiv", "userDiv")
     const otherUsersDiv = createDiv("otherUsersDiv", "otherUsersDiv")
     const userNameDiv = createButton("userNameDiv", "userNameDiv")
-    userNameDiv.onclick = function () {
+    const usernameSpan = createElement("span", "userNameSpan", "usernameSpan")
+    userNameDiv.onclick = function() {
         this.classList.toggle('is-open');
 
         const content = this.nextElementSibling
@@ -19,39 +20,40 @@ export const renderWishesView = (parentElement, userName, userDayOfBirthday, wis
             content.style.maxHeight = content.scrollHeight + "px";
         }
     }
-    userNameDiv.innerHTML = userName
+    userNameDiv.append(usernameSpan)
+    usernameSpan.innerText = userName
     const wishesDiv = createDiv("wishesDiv", "wishesDiv")
     const utilsDiv = createDiv("utilsDiv", "utilsDiv")
     const innerImgDiv = createDiv("innerImgDiv", "innerImgDiv")
     const buttonDiv = createDiv("buttonDiv", "buttonDiv")
-    // create separate function for creating buttons
+        // create separate function for creating buttons
     const exitButton = createInput("button", "exit", "exitButton", "exitButton")
     exitButton.setAttribute("value", "exit")
-    exitButton.addEventListener("click", function () {
+    exitButton.addEventListener("click", function() {
         deleteCookie("auth-token")
         loginPageModelInstans.setLoginStatus(false)
     })
     const addButton = createInput("button", "addButton", "addButton")
     addButton.setAttribute("value", "add")
-    addButton.addEventListener("click", function (e) {
+    addButton.addEventListener("click", function(e) {
         handleWishSubmit()
     })
     const titleArea = createInput("input", "enter wish title", "titleArea", "titleArea")
-    titleArea.addEventListener("keypress", function (e) {
+    titleArea.addEventListener("keypress", function(e) {
         if (e.keyCode !== 13) {
             return
         }
         handleWishSubmit()
     })
     const bodyArea = createInput("input", "enter wish body", "bodyArea", "bodyArea")
-    bodyArea.addEventListener("keypress", function (e) {
+    bodyArea.addEventListener("keypress", function(e) {
         if (e.keyCode !== 13) {
             return
         }
         handleWishSubmit()
     })
     const urlArea = createInput("input", "enter wish url", "urlArea", "urlArea")
-    urlArea.addEventListener("keypress", function (e) {
+    urlArea.addEventListener("keypress", function(e) {
         if (e.keyCode !== 13) {
             return
         }
@@ -71,9 +73,9 @@ export const renderWishesView = (parentElement, userName, userDayOfBirthday, wis
     userNameDiv.append(exitButton)
     userNameDiv.append(timerElements)
     buttonDiv.append(addButton)
-    // should be triggered by model's change handler
+        // should be triggered by model's change handler
     renderWishesList(wishList, userName, wishesDiv)
-    // const endtime = "September 28 2021 00:00:00 GMT+0300"
+        // const endtime = "September 28 2021 00:00:00 GMT+0300"
     initializeClock(timerElements, userDayOfBirthday)
     renderNotLoggedInWishes(wishList, userName, friendsList, otherUsersDiv)
 
@@ -118,21 +120,23 @@ const renderNotLoggedInWishes = (wishList, userName, friendsList, divForRender) 
     divForRender.innerHTML = ""
     friendsList.forEach(user => {
         const notLoggedInUserDiv = createDiv("notLoggedInUserDiv", "notLoggedInUserDiv")
+        const usernameSpan = createElement("span", "usernameSpan", "usernameSpan")
         const otherUserDiv = createDiv("otherUsersWishDiv", "otherUsersWishDiv")
         const accordionButton = createButton("accordion", "accordion")
         if (user.userName !== userName) {
             const timerElements = createTimerElementsForFriends(user.userName)
+            usernameSpan.innerText = user.userName
             const userDayOfBirthday = user.DoB
-            accordionButton.innerText = user.userName
+            accordionButton.append(usernameSpan)
             notLoggedInUserDiv.append(accordionButton)
             wishList.forEach((wish, index) => {
                 if (wish.userName === user.userName) {
                     const singleWish = createWishElementForNotLoggedInUser(wish, index)
                     otherUserDiv.append(singleWish)
                 }
-                accordionButton.onclick = function () {
+                accordionButton.onclick = function() {
                     this.classList.toggle('is-open');
-                    
+
                     const content = this.nextElementSibling
                     if (content.style.maxHeight) {
                         content.style.maxHeight = null;
@@ -186,16 +190,16 @@ const createWishElement = (wish, index, userName, divForRender, wishlist) => {
     wishBody.innerHTML = wish.body
     wishUrl.innerHTML = wish.url
     wishUrl.setAttribute("href", wish.url)
-    // keep the order!
-    deleteButton.addEventListener("click", function () {
+        // keep the order!
+    deleteButton.addEventListener("click", function() {
         const wishIndex = wishDiv.getAttribute("index")
         deleteWish(wishList, wishIndex)
         divForRender.innerHTML = ""
         renderWishesList(wishList, userName, wishDiv)
-        // better to call it performPostRequest
+            // better to call it performPostRequest
         fetchPostRequest("POST", backendWishesURL, wishList)
     })
-    editButton.addEventListener("click", function () {
+    editButton.addEventListener("click", function() {
         const wishIndex = wishDiv.getAttribute("index")
         const editedTitle = prompt("enter title")
         const editedBody = prompt("enter body")
@@ -218,5 +222,3 @@ const createWishElement = (wish, index, userName, divForRender, wishlist) => {
     wishDiv.append(buttonsDiv)
     return wishDiv
 }
-
-

@@ -35,14 +35,15 @@
     transition: max-height 0.2s ease-in-out;
 }
 
-.utilsDiv > * {
+.utilsDiv>* {
     margin-bottom: 10px;
 }
 
-.utilsDiv > *:last-child {
+.utilsDiv>*:last-child {
     margin-bottom: 0px;
     background-color: white;
 }
+
 
 /* .wishesDiv {
     display: flex;
@@ -90,14 +91,12 @@ button.userNameDiv:after {
     font-family: "fontawesome";
     font-size: 14px;
     float: right;
-      
-  }
-  
-  
-  button.userNameDiv:hover, button.userNameDiv.is-open {
-    background-color: #ddd;
-  }
-  
+}
+
+button.userNameDiv:hover,
+button.userNameDiv.is-open {
+    background-color: #137f8a85;
+}
 
 .emojiButton {
     font-size: 24px;
@@ -129,5 +128,4 @@ button.userNameDiv:after {
 
 .exitButton {
     margin-left: 70%;
-
 }

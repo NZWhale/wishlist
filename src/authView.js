@@ -1,4 +1,4 @@
-import { createDiv, createInput } from "./htmlUtils"
+import { createDiv, createInput, createElement } from "./htmlUtils"
 import { clearRegTextArea } from "./authHtmlUtils"
 import { login, createNewUser } from "./authModel"
 
@@ -10,8 +10,14 @@ export const renderLoginLayout = (parentElement, loginPageModelInstance, userMod
     const userNameArea = createInput("input", "enter username", "userNameArea", "userNameArea")
     const DoBArea = createInput("date", "enter your birthday", "DoBArea", "DoBArea")
     const loginButton = createInput("button", "Log In", "loginButton", "loginButton")
+    const logo = createDiv("logo", "logo")
+    const logoImg = createElement("img", "logoImg", "logoImg")
+    const logoSpan = createElement("span", "logoSpan", "logoSpan")
+    logoImg.setAttribute("src", "src/img/2020-10-18 19.27.23.jpg")
+    logoSpan.innerText = "Doobki's Wishlist"
+    logo.append(logoSpan, logoImg)
     loginButton.setAttribute("value", "LogIn")
-    loginButton.addEventListener("click", function (e) {
+    loginButton.addEventListener("click", function(e) {
         const loginArea = document.getElementById("loginArea").value
         const passwordArea = document.getElementById("passwordArea").value
         if (e.keyCode === 13) {
@@ -30,13 +36,13 @@ export const renderLoginLayout = (parentElement, loginPageModelInstance, userMod
     })
     const regButton = createInput("button", "Registration", "regButton", "regButton")
     regButton.setAttribute("value", "Registation")
-    regButton.addEventListener("click", function (e) {
+    regButton.addEventListener("click", function(e) {
         authDiv.innerHTML = ""
         const compliteRegButton = createInput("button", "complite registration", "compliteRegButton", "compliteRegButton")
         const backButton = createInput("button", "back", "backButton", "backButton")
         backButton.setAttribute("value", "back")
         compliteRegButton.setAttribute("value", "DONE")
-        compliteRegButton.addEventListener("click", function () {
+        compliteRegButton.addEventListener("click", function() {
             const loginArea = document.getElementById("loginArea").value
             const passwordArea = document.getElementById("passwordArea").value
             const userNameArea = document.getElementById("userNameArea").value
@@ -57,7 +63,7 @@ export const renderLoginLayout = (parentElement, loginPageModelInstance, userMod
                                 createNewUser(loginArea, passwordArea, userNameArea, DoBArea, userModelInstance, loginPageModelInstance)
                                 userModelInstance.setDayOfBirthday(DoBArea)
                                 userModelInstance.setUserName(userNameArea)
-                                // clearRegTextArea()
+                                    // clearRegTextArea()
                             }
                         }
                     }
@@ -66,12 +72,12 @@ export const renderLoginLayout = (parentElement, loginPageModelInstance, userMod
                 createNewUser(loginArea, passwordArea, userNameArea, DoBArea, userModelInstance, loginPageModelInstance)
                 userModelInstance.setDayOfBirthday(DoBArea)
                 userModelInstance.setUserName(userNameArea)
-                // clearRegTextArea()
+                    // clearRegTextArea()
             }
         })
         authDiv.append(loginArea, passwordArea, userNameArea, DoBArea, compliteRegButton, backButton)
         parentElement.append(authDiv)
     })
-    authDiv.append(loginArea, passwordArea, loginButton, regButton)
+    authDiv.append(logo, loginArea, passwordArea, loginButton, regButton)
     parentElement.append(authDiv)
 }
