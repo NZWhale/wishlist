@@ -26,9 +26,7 @@
     display: flex;
     flex-direction: column;
     margin-bottom: 32px;
-    background-color: white;
-    border-left: 1px solid whitesmoke;
-    border-right: 1px solid whitesmoke;
+    background-color: #ffffff05;
     padding: 0 20px;
     max-height: 0;
     overflow: hidden;
@@ -41,7 +39,7 @@
 
 .utilsDiv>*:last-child {
     margin-bottom: 0px;
-    background-color: white;
+    background-color: #ffffff05;
 }
 
 
@@ -69,22 +67,31 @@
 
 .singleWish {
     border-bottom: 1px solid #e9e9e9;
+    margin: 15px
 }
 
 .userNameDiv {
-    border-radius: 10px;
-    font-size: 26px;
-    margin-bottom: 16px;
     width: 100%;
-    background-color: #d4ccda;
-    border: none;
-    outline: none;
-    text-align: left;
-    padding: 15px 20px;
-    font-size: 18px;
-    color: #333;
-    cursor: pointer;
-    transition: background-color 0.2s linear;
+    display: flex;
+    justify-content: space-between;
+    zoom: 1;
+    background: #545356f2;
+    background-image: -webkit-linear-gradient(bottom, #6f6a6a 2%, #8080806b 50%, #cfced4 100%);
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    border-radius: 7px;
+    background-clip: padding-box;
+    padding: 12px;
+    height: auto;
+    line-height: 40px;
+    text-align: center;
+    border: 1px solid #1a1b1dc9;
+    margin-top: 5px;
+    box-shadow: 4px 7px 20px 3px rgb(81 79 82);
+    text-shadow: 3px 2px 4px #29251e;
+    margin-bottom: 15px;
 }
 
 button.userNameDiv:after {
@@ -127,5 +134,5 @@ button.userNameDiv.is-open {
 }
 
 .exitButton {
-    margin-left: 70%;
+    width: 60px;
 }

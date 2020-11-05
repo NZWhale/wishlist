@@ -5,51 +5,21 @@ var htmlUtils_1 = require("./htmlUtils");
 exports.createTimerElements = function () {
     var clockDiv = htmlUtils_1.createDiv("clock", "clock");
     var daysDiv = htmlUtils_1.createDiv("daysDiv", "daysDiv");
-    var hoursDiv = htmlUtils_1.createDiv("hoursDiv", "hoursDiv");
-    var minutesDiv = htmlUtils_1.createDiv("minutesDiv", "minutesDiv");
-    var secondsDiv = htmlUtils_1.createDiv("secondsDiv", "secondsDiv");
     var daysCount = htmlUtils_1.createElement("span", "daysCount", "daysCount");
-    var hoursCount = htmlUtils_1.createElement("span", "hoursCount", "hoursCount");
-    var minutesCount = htmlUtils_1.createElement("span", "minutesCount", "minutesCount");
-    var secondsCount = htmlUtils_1.createElement("span", "secondsCount", "secondsCount");
     var daysCountText = htmlUtils_1.createElement("span", "daysCountText", "daysCountText");
-    var hoursCountText = htmlUtils_1.createElement("span", "hoursCountText", "hoursCountText");
-    var minutesCountText = htmlUtils_1.createElement("span", "minutesCountText", "minutesCountText");
-    var secondsCountText = htmlUtils_1.createElement("span", "secondsCountText", "secondsCountText");
     daysCountText.innerText = " Days ";
-    hoursCountText.innerText = ":";
-    minutesCountText.innerText = ":";
-    secondsCountText.innerText = "";
     daysDiv.append(daysCount, daysCountText);
-    hoursDiv.append(hoursCount, hoursCountText);
-    minutesDiv.append(minutesCount, minutesCountText);
-    secondsDiv.append(secondsCount, secondsCountText);
-    clockDiv.append(daysDiv, hoursDiv, minutesDiv, secondsDiv);
+    clockDiv.append(daysDiv);
     return clockDiv;
 };
 exports.createTimerElementsForFriends = function (username) {
-    var clockDiv = htmlUtils_1.createDiv("clock" + username, "clock" + username);
+    var clockDiv = htmlUtils_1.createDiv("clock" + username, "clock");
     var daysDiv = htmlUtils_1.createDiv("daysDiv", "daysDiv");
-    var hoursDiv = htmlUtils_1.createDiv("hoursDiv", "hoursDiv");
-    var minutesDiv = htmlUtils_1.createDiv("minutesDiv", "minutesDiv");
-    var secondsDiv = htmlUtils_1.createDiv("secondsDiv", "secondsDiv");
     var daysCount = htmlUtils_1.createElement("span", "daysCount", "daysCount");
-    var hoursCount = htmlUtils_1.createElement("span", "hoursCount", "hoursCount");
-    var minutesCount = htmlUtils_1.createElement("span", "minutesCount", "minutesCount");
-    var secondsCount = htmlUtils_1.createElement("span", "secondsCount", "secondsCount");
     var daysCountText = htmlUtils_1.createElement("span", "daysCountText", "daysCountText");
-    var hoursCountText = htmlUtils_1.createElement("span", "hoursCountText", "hoursCountText");
-    var minutesCountText = htmlUtils_1.createElement("span", "minutesCountText", "minutesCountText");
-    var secondsCountText = htmlUtils_1.createElement("span", "secondsCountText", "secondsCountText");
     daysCountText.innerText = " Days ";
-    hoursCountText.innerText = ":";
-    minutesCountText.innerText = ":";
-    secondsCountText.innerText = "";
     daysDiv.append(daysCount, daysCountText);
-    hoursDiv.append(hoursCount, hoursCountText);
-    minutesDiv.append(minutesCount, minutesCountText);
-    secondsDiv.append(secondsCount, secondsCountText);
-    clockDiv.append(daysDiv, hoursDiv, minutesDiv, secondsDiv);
+    clockDiv.append(daysDiv);
     return clockDiv;
 };
 var getTimeRemaining = function (dateOfBirthday) {
@@ -80,15 +50,9 @@ var getTimeRemaining = function (dateOfBirthday) {
 exports.initializeClock = function (renderElement, endtime) {
     var clock = renderElement;
     var daysSpan = renderElement.querySelector('.daysCount');
-    var hoursSpan = renderElement.querySelector('.hoursCount');
-    var minutesSpan = renderElement.querySelector('.minutesCount');
-    var secondsSpan = renderElement.querySelector('.secondsCount');
     function updateClock() {
         var timer = getTimeRemaining(endtime);
         daysSpan.innerHTML = timer.days;
-        hoursSpan.innerHTML = ('0' + timer.hours).slice(-2);
-        minutesSpan.innerHTML = ('0' + timer.minutes).slice(-2);
-        secondsSpan.innerHTML = ('0' + timer.seconds).slice(-2);
         if (timer.total <= 0) {
             clearInterval(timeinterval);
         }

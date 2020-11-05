@@ -70,8 +70,8 @@ export const renderWishesView = (parentElement, userName, userDayOfBirthday, wis
     utilsDiv.append(innerImgDiv)
     utilsDiv.append(buttonDiv)
     utilsDiv.append(wishesDiv)
-    userNameDiv.append(exitButton)
     userNameDiv.append(timerElements)
+    userNameDiv.append(exitButton)
     buttonDiv.append(addButton)
         // should be triggered by model's change handler
     renderWishesList(wishList, userName, wishesDiv)
